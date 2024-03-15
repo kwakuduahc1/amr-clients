@@ -1,0 +1,22 @@
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  button {
+    align-self: center;
+  }
+}
+
+form:has(#display:checked) {
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.legend_area {
+  display: flex;
+
+  mat-icon {
+    cursor: pointer;
+  }
+}

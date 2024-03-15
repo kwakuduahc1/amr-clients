@@ -1,0 +1,8 @@
+<mat-checkbox matInput class="" [formControl]="control" [checked]="ctrl.checked" [color]="ctrl.color">
+    {{ctrl.label}}
+</mat-checkbox>
+@if(control.errors){
+<mat-error>
+    <span *ngIf="control.touched && control.errors['required']">*</span>
+</mat-error>
+}

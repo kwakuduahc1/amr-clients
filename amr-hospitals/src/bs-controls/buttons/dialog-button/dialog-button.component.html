@@ -1,0 +1,4 @@
+<button mat-raised-button extended data-test="dialog-btn" (click)="btn_clicked()" type="button" [title]="props().title"
+    [disabled]="isProcessing" [ngClass]="!isProcessing ? 'icon-hot-1': 'icon-success-1'">
+    <mat-icon>{{props().icon}}</mat-icon> {{props().text}}
+</button>

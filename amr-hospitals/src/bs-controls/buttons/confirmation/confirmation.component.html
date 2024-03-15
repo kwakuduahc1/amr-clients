@@ -1,0 +1,14 @@
+<div class="alert-box">
+    <div class="modal-header">
+        <h2 class="modal-title">{{data}}</h2>
+    </div>
+    <div class="modal-footer">
+        <button type="button" mat-icon-button matTooltip="Continue action" data-test="confirm-btn"
+            [mat-dialog-close]="true" mat-icon-button>
+            <mat-icon color="icon-success">check</mat-icon>
+        </button>
+        <button type="button" mat-icon-button matTooltip="Cancel action" data-test="cancel-btn" (click)="close()">
+            <mat-icon color="icon-warm">close</mat-icon>
+        </button>
+    </div>
+</div>

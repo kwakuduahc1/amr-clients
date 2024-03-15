@@ -1,0 +1,287 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+    --white: #ffffff;
+    --cool-1: #02488F;
+    --cool-2: #02366B;
+    --cool-3: #011B36;
+    --warm-1: #E89B53;
+    --warm-2: #CB8849;
+    --warm-3: #AE743E;
+    --hot-1: #E74C3C;
+    --hot-2: #CA4335;
+    --hot-3: #AD392D;
+    --success-1: #81C784;
+    --success-2: #619563;
+    --success-3: #416442;
+    --links: #D113C2;
+
+}
+
+html,
+body {
+    height: 100%;
+    font-size: 1rem;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.icon-white {
+    color: var(--white);
+}
+
+.icon-cool-1:has(mat-icon) * {
+    color: var(--cool-1);
+}
+
+.icon-cool-2:has(mat-icon) * {
+    color: var(--cool-2);
+}
+
+.icon-cool-3:has(mat-icon) * {
+    color: var(--cool-3);
+}
+
+.icon-warm-1:has(mat-icon) * {
+    color: var(--warm-1);
+}
+
+.icon-warm-2:has(mat-icon) * {
+    color: var(--warm-2);
+}
+
+.icon-warm-3:has(mat-icon) * {
+    color: var(--warm-3);
+}
+
+.icon-hot-1:has(mat-icon) * {
+    color: var(--hot-1);
+}
+
+.icon-hot-2:has(mat-icon) {
+    color: var(--hot-2);
+}
+
+.icon-hot-3:has(mat-icon) {
+    text-align: right;
+    color: var(--hot-3, white);
+    background-color: var(--hot-3);
+}
+
+.icon-success-1:has(mat-icon) * {
+    color: var(--success-1);
+
+}
+
+.icon-success-2:has(mat-icon) * {
+    color: var(--success-2);
+}
+
+.icon-success-3 {
+    outline: 2px solid var(--cool-1);
+    border-radius: 5px;
+    background-color: var(--success-3);
+    color: white;
+}
+
+.mat-snack-bar-container button {
+    background-color: white;
+}
+
+.snackbar-info {
+    background-color: var(--warm-1);
+}
+
+button.background-white {
+    background-color: var(--white);
+}
+
+button.background-cool-1 {
+    background-color: var(--cool-1);
+}
+
+button.background-cool-2 {
+    background-color: var(--cool-2);
+}
+
+button.background-cool-3 {
+    background-color: var(--cool-3);
+}
+
+button.background-warm-1 {
+    background-color: var(--warm-1);
+}
+
+button.background-warm-2 {
+    background-color: var(--warm-2);
+}
+
+button.background-warm-3 {
+    background-color: var(--warm-3);
+}
+
+form {
+
+    *+mat-form-field,
+    *+button {
+        margin-inline: 0 8px;
+    }
+}
+
+.txt-header-1 {
+    font-size: 1rem;
+    color: var(--cool-1, green);
+    text-align: center;
+    padding: 0.3rem;
+    font-weight: 500;
+}
+
+.txt-header-2 {
+    font-size: 1.2rem;
+    color: var(--cool-2);
+    text-align: center;
+    font-weight: 700;
+}
+
+
+.txt-header-3 {
+    font-size: 1.5rem;
+    color: var(red, --cool-3);
+    text-align: center;
+    padding: 1rem;
+    font-weight: 900;
+    text-decoration: underline;
+}
+
+.waiting {
+    color: var(--hot-1);
+}
+
+.done {
+    color: var(--success-3);
+}
+
+.diag-close-btn {
+    float: inline-end;
+}
+
+.diag-body {
+    display: block;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+}
+
+.toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: auto 5px;
+}
+
+.app-title {
+    font-style: normal;
+    text-decoration-line: 0;
+    font-size: 2.0rem;
+    color: white;
+}
+
+.user-menu {
+    position: absolute;
+    right: 1rem;
+}
+
+.close-btn {
+    float: right;
+}
+
+.fieldset {
+    border: 0;
+}
+
+.form-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    flex: content;
+    width: -moz-fit-content;
+    width: fit-content;
+    border: 0;
+}
+
+.fieldset:has(#display:checked) {
+
+    .form-controls {
+        flex-direction: column;
+        gap: .1rem;
+    }
+}
+
+dialog {
+    border: 0;
+
+    @keyframes glow {
+        0% {
+            box-shadow: 0 0 2px var(--warm-1)
+        }
+
+        50% {
+            box-shadow: 0 0 5px var(--warm-2);
+        }
+
+        100% {
+            box-shadow: 0 0 2px var(--warm-3)
+        }
+    }
+
+    animation: glow 5s infinite ease-in-out;
+}
+
+.modal::backdrop {
+    backdrop-filter: blur(2px);
+}
+
+.modal-element {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    border: 0;
+
+
+    .md-close-btn {
+        cursor: pointer;
+        align-self: flex-end;
+        border-radius: 50%;
+        outline: 2px solid var(--cool-1);
+        color: var(--hot-3);
+    }
+}
+
+// mat-list-item {
+//     padding: 0 !important;
+
+//     .mdc-list-item__content * {
+//         padding: 0;
+//         margin: 0;
+//         border: 2px solid red;
+//     }
+// }

@@ -1,0 +1,7 @@
+<h1 class="txt-header-2 text-center">User management</h1>
+<button type="button" mat-fab extended class="icon-cool-3 background-white" matTooltip="Add a new user"
+    routerLink="/auth/register">
+    <mat-icon>person_add</mat-icon> New user
+</button>
+
+<app-table-display [data]="users()" [headers]="headers" (viewClick)="view($event)" (deleteClick)="deleteUser($event)" />

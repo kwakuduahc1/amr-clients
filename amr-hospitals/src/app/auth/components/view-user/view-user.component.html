@@ -1,0 +1,27 @@
+<mat-icon class="icon-hot-3 md-close-btn" (click)="approve()">close</mat-icon>
+@if (user;) {
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{user.title}} {{user.fullName}}</mat-card-title>
+        <mat-card-subtitle>{{user.userName}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p><b>Rank:</b> {{user.rank}}</p>
+        <p><i>Phone numbers</i></p>
+        @for (p of user.phoneNumber; track $index) {
+        <p>
+            <img alt="WhatsApp lolo" class="wapp" src="/assets/whatsapp_icon.jpg">
+            <a href="https://wa.me/{{intPhone(p)}}" target="_blank" rel="noopener">{{p}}</a>
+        </p>
+        }
+    </mat-card-content>
+    <mat-card-actions [align]="'start'">
+        <button color="accent" (click)="remove(user)" mat-flat-button type="button" title="Delete the user">
+            <mat-icon>delete</mat-icon> Delete
+        </button>
+    </mat-card-actions>
+</mat-card>
+@if (act;as a) {
+<app-form-builder [controls]="form" [props]="props" [status]="edit" (submit)="approve($event)" />
+}
+}

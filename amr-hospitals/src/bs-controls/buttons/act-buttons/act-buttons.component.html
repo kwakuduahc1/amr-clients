@@ -1,0 +1,4 @@
+<button mat-raised-button extended (click)="submit(form().value)" data-test="submit-btn" type="{{type}}" [title]="title"
+    [disabled]="form().invalid || isProcessing" [ngClass]="form().invalid ? 'icon-hot-1': 'icon-success-1'">
+    <mat-icon>{{icon}}</mat-icon> {{text()}}
+</button>

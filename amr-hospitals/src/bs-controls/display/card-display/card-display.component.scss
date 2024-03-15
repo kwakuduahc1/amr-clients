@@ -1,0 +1,10 @@
+.card_display {
+  margin-block: 1rem;
+  display: flex;
+  margin-inline: 1rem;
+}
+
+mat-card:hover {
+  border: 2px solid red;
+  border-radius: 1rem;
+}

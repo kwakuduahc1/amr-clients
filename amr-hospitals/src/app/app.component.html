@@ -1,0 +1,62 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+        <a aria-label="Navigate to the home page" [routerLink]="['/home']" routerLinkActive="active">
+            <mat-toolbar>Home</mat-toolbar>
+        </a>
+        <mat-nav-list id="main-links">
+            <a mat-list-item routerLink="/auth/users" routerLinkActive="active">
+                <mat-icon>
+                    group
+                </mat-icon> Users
+            </a>
+            <a mat-list-item routerLink="/wards" routerLinkActive="active">
+                <mat-icon>single_bed</mat-icon> Wards
+            </a>
+            <a mat-list-item routerLink="/schedules" routerLinkActive="active">
+                <mat-icon>
+                    timer
+                </mat-icon> Schedules
+            </a>
+            <a mat-list-item routerLink="/teams" routerLinkActive="active">
+                <mat-icon>
+                    diversity_3
+                </mat-icon> Teams
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar class="toolbar" color="accent">
+            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+                *ngIf="isHandset$ | async">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+
+            <span class="app-title">
+                <span aria-label="The name of the application" [routerLink]="['/home']">{{env.AppName}}</span>
+            </span>
+            <span class="example-spacer"></span>
+            <div class="user-menu">
+                <button type="button" [matMenuTriggerFor]="menu" mat-icon-button (click)="toggleMenu()">
+                    <mat-icon>person</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button type="button" title="Manage account" *ngIf="status.isLoggedIn()" mat-menu-item>
+                        {{ status.user?.fullName ?? status.user?.userName}}
+                    </button>
+                    <button type="button" title="Manage account" *ngIf="status.isLoggedIn()" mat-menu-item>
+                        <mat-icon>manage_accounts</mat-icon> Account
+                    </button>
+                    <button type="button" title="" (click)="logout()" *ngIf="status.isLoggedIn()" mat-menu-item>
+                        <mat-icon>logout</mat-icon>Log out
+                    </button>
+                    <button type="button" title="" [routerLink]='["/auth/login"]' *ngIf="!status.isLoggedIn()"
+                        mat-menu-item>
+                        <mat-icon>login</mat-icon>Log in
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,21 @@
+<mat-form-field>
+    <mat-label class="sr-only">{{ctrl.label}}</mat-label>
+    <input matInput type="number" data-test="code" title="{{ctrl.title}}" placeholder="{{ctrl.placeholder}}"
+        [formControl]="control()">
+    @if(ctrl.options){
+    <datalist>
+
+    </datalist>
+    }
+    @if(control().touched && control().errors){
+    <mat-error>
+        <span
+            *ngIf="control().errors?.['maxlength']">{{control().errors?.['maxlength'].requiredLength}}/{{control().errors?.['maxlength'].actualLength}}
+            max chars</span>
+        <span *ngIf="control().errors?.['required']">Required</span>
+        <span
+            *ngIf="control().errors?.['minlength']">{{control().errors?.['minlength']['requiredLength']}}/{{control().errors?.['minlength'].actualLength}}
+            min chars </span>
+    </mat-error>
+    }
+</mat-form-field>

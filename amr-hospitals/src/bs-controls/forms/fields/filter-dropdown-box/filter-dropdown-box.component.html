@@ -1,0 +1,19 @@
+<mat-form-field>
+  <input matInput [formControl]="control()" placeholder="Filter Options" [matAutocomplete]="auto" />
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+    <!-- <mat-option *ngFor="let o of options | async" [value]="o.value">
+      {{ o.key ?? o.value??'' }}
+    </mat-option> -->
+  </mat-autocomplete>
+  @if(control().errors; as err){
+  <mat-error>
+    <span></span>
+    <span *ngIf="err?.['errors']['maxlength']">{{err?.['errors']['maxlength'].requiredLength}}
+      max chars</span>
+    <span *ngIf="err?.['touched'] && err?.['errors']['required']">Required</span>
+    <span *ngIf="err?.['touched'] && err?.['errors']['minlength']">{{err?.['errors']['minlength'].requiredLength}}
+      min chars </span>
+    <span *ngIf="err['touched'] && err['inList']">Invalid selection</span>
+  </mat-error>
+  }
+</mat-form-field>

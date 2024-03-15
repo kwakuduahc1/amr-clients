@@ -1,0 +1,7 @@
+.list {
+    border-color: yellowgreen;
+}
+
+mat-list-item:not(:first) {
+    cursor: grab;
+}

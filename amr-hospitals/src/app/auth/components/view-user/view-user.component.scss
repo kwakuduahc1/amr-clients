@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+p:has(.wapp) {
+  display: flex;
+  align-content: baseline;
+  gap: 10px;
+}
+
+.wapp {
+  height: 20px;
+  width: 20px;
+}

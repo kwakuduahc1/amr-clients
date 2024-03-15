@@ -1,0 +1,13 @@
+<div class="card_display">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{card().title}}</mat-card-title>
+            @if(card().subTitle){
+            <mat-card-subtitle>{{card().subTitle}}</mat-card-subtitle>
+            }
+        </mat-card-header>
+        <mat-card-content>
+            {{card().content}}
+        </mat-card-content>
+    </mat-card>
+</div>
