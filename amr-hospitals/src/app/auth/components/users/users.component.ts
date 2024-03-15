@@ -12,7 +12,6 @@ import { ConfirmationComponent } from '../../../../bs-controls/buttons/confirmat
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivityProvider } from '../../../providers/ActivityProvider';
 import { TableDisplayComponent } from '../../../../bs-controls/display/table-display/table-display.component';
-import { Teams } from '../../../model/dtos';
 import { ViewUserComponent } from '../view-user/view-user.component';
 
 @Component({
@@ -38,7 +37,6 @@ export class UsersComponent {
   act = inject(ActivityProvider).act()
 
   users = input.required<RegisterVm[]>();
-  teams = input.required<Teams[]>();
 
   headers: TableHeaders = { userName: 'User name', fullName: 'Full name', view: 'View' }
 
@@ -58,20 +56,20 @@ export class UsersComponent {
   }
 
   view(i: RegisterVm) {
-    this.diag.open(ViewUserComponent, {
-      data: { user: i, teams: this.teams() }
-    })
-      .afterClosed()
-      .pipe(
-        filter(x => !!x),
-        map(x => {
-          i.teamsID = x['value']['teamsID'];
-          return i;
-        }),
-        tap(x => console.log(x)),
-        switchMap(i => this.approve(i))
-      )
-      .subscribe(x => console.log(x));
+    // this.diag.open(ViewUserComponent, {
+    //   data: { user: i, teams: this.teams() }
+    // })
+    //   .afterClosed()
+    //   .pipe(
+    //     filter(x => !!x),
+    //     map(x => {
+    //       i.teamsID = x['value']['teamsID'];
+    //       return i;
+    //     }),
+    //     tap(x => console.log(x)),
+    //     switchMap(i => this.approve(i))
+    //   )
+    //   .subscribe(x => console.log(x));
   }
 
   approve(i: RegisterVm) {

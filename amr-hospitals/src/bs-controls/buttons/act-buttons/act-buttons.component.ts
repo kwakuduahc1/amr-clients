@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject, input, signal } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,11 +15,11 @@ import { ActivityProvider } from '../../../app/providers/ActivityProvider';
 export class ActButtonsComponent {
   form = input.required<FormGroup>();
   text = input.required<string>();
-  isProcessing = inject(ActivityProvider).act().isProcessing;
-  @Input() title = '';
-  @Input() type: 'button' | 'submit' | 'search' = 'button';
-  @Input() icon: string = ''
-  @Output() btn_click = new EventEmitter(true);
+  isProcessing = inject(ActivityProvider).act();
+  title = input.required<string>();
+  type = input<'button' | 'submit' | 'search'>('button')
+  icon = input<string>('add')
+  btn_click = output()// new EventEmitter(true);
 
   submit(e: any) {
     this.btn_click.emit(e)

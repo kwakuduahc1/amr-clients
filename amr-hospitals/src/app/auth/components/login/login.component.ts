@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { IUsers } from '../../../model/IUsers';
 import { StatusProvider } from '../../../providers/StatusProvider';
 import { FormDataVm, FormProperties } from '../../../../bs-controls/model/elements';
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   props: FormProperties = { name: 'form', id: 'form', class: '', legend: 'User information', btnText: 'Login', icon: 'users' };
   status = inject(StatusProvider);
 
-  edit = new BehaviorSubject<{ edit: boolean }>({ edit: false });
+  edit = signal(false);
 
   ngOnInit(): void { }
 

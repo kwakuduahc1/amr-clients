@@ -1,58 +1,60 @@
-<form [id]="props.id" [name]="props.name" [formGroup]="form" [ngClass]="props.class">
+@if (props(); as p) {
+<form [id]="p.id" [name]="p.name" [formGroup]="form" [ngClass]="p.class">
     <fieldset class="fieldset">
         <div class="legend_area">
-            @if (props.legend) {
-            <legend>{{props.legend}}
+            @if (p.legend) {
+            <legend>{{p.legend}}
             </legend>
             }
-            <mat-icon (click)="display.checked = !display.checked">{{display?.checked ? 'arrow_circle_right':
-                'arrow_circle_down'}}</mat-icon>
-            <input hidden type="checkbox" [checked]="props.direction" #display id="display" class="display"
-                name="display" id="display" title="Change layout">
+            <!-- <mat-icon (click)="display.checked = !display.checked">{{display?.checked ? 'arrow_circle_right':
+                'arrow_circle_down'}}</mat-icon> -->
+            <!-- <input hidden type="checkbox" [checked]="p.direction" #display id="display" class="display"
+                name="display" id="display" title="Change layout"> -->
         </div>
-        <div class="form-controls">
-            @for(ctrl of _controls;track ctrl.name){
-            @switch (ctrl.control_type) {
-            @case ('textbox') {
-            @if (isFormControl(ctrl.name)) {
-            <app-textbox-control [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
-            }
-            @else {
-            @for (c of ctrl.children; track $index;) {
-            <app-textbox-control [fgrp]="form" [control]="fmChildArray(ctrl.name, $index)" [ctrl]="c" />
-            }
-            }
-            }
-            @case ('search') {
-            <app-search-box [form]="form" [ctrl]="ctrl" />
-            }
-            @case ('password') {
-            <app-password-control-box [fgrp]="form" [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
-            }
-            @case ('number') {
-            <app-number-box [fgrp]="form" [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
-            }
-            @case ('date') {
-            <app-date-box [fgrp]="form" [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
-            }
-            @case ('date-time') {
-            <app-date-time-box [fgrp]="form" [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
-            }
-            @case ('dropdown') {
-            <app-dropdown-boxes [ctrl]="toDropDown(ctrl)" [control]="getFmCtrl(ctrl.name)" />
-            }
-            @case ('checkbox') {
-            <app-checkboxes [form]="form" [ctrl]="toCheck(ctrl)" />
-            }
-            <!-- @case ('autocomplete') {
+        <div class="forms-container">
+            <div class="form-controls">
+                @for(ctrl of _controls;track ctrl.name){
+                @switch (ctrl.control_type) {
+                @case ('textbox') {
+                @if (isFormControl(ctrl.name)) {
+                <app-textbox-control [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
+                }
+                @else {
+                @for (c of ctrl.children; track $index;) {
+                <app-textbox-control [fgrp]="form" [control]="fmChildArray(ctrl.name, $index)" [ctrl]="c" />
+                }
+                }
+                }
+                @case ('search') {
+                <app-search-box [form]="form" [ctrl]="ctrl" />
+                }
+                @case ('password') {
+                <app-password-control-box [fgrp]="form" [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
+                }
+                @case ('number') {
+                <app-number-box [fgrp]="form" [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
+                }
+                @case ('date') {
+                <app-date-box [fgrp]="form" [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
+                }
+                @case ('date-time') {
+                <app-date-time-box [fgrp]="form" [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
+                }
+                @case ('dropdown') {
+                <app-dropdown-boxes [ctrl]="toDropDown(ctrl)" [control]="getFmCtrl(ctrl.name)" />
+                }
+                @case ('checkbox') {
+                <app-checkboxes [form]="form" [ctrl]="toCheck(ctrl)" />
+                }
+                <!-- @case ('autocomplete') {
             <app-filter-dropdown-box [form]="form" [ctrl]="toDropDown(ctrl)" />
             } -->
-            }
-            }
-            @if(status|async;as st){
-            <app-act-buttons (btn_click)="f_submit($event, st.edit)" [form]="form" type="button" [icon]="props.icon"
-                [title]="'Save the form'" [text]="props.btnText" />
-            }
+                }
+                }
+            </div>
+            <app-act-buttons class="form-button" (btn_click)="f_submit($event, status())" [form]="form" type="button"
+                [icon]="p.icon" [title]="'Save the form'" [text]="p.btnText" />
         </div>
     </fieldset>
 </form>
+}

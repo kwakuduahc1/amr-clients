@@ -1,15 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { BehaviorSubject, filter, map, switchMap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 import { LoginHttpService } from '../../../http/login-http-service';
-import { ILogin, RegisterVm } from '../../../model/IUsers';
+import { RegisterVm } from '../../../model/IUsers';
 import { ActivityProvider } from '../../../providers/ActivityProvider';
 import { StatusProvider } from '../../../providers/StatusProvider';
 import { MatDialog } from '@angular/material/dialog'
 import { ActButtonsComponent } from '../../../../bs-controls/buttons/act-buttons/act-buttons.component';
 import { FormDataVm, FormProperties } from '../../../../bs-controls/model/elements';
-import { transformBsControl } from '../../../../bs-controls/bs-control-tranformer';
 import { FormBuilderComponent } from '../../../../bs-controls/forms/form-builder/form-builder.component';
 import { ConfirmationComponent } from '../../../../bs-controls/buttons/confirmation/confirmation.component';
 import { CommonModule } from '@angular/common';
@@ -35,9 +34,9 @@ export class RegisterComponent {
   snack = inject(MatSnackBar);
 
   props: FormProperties = { name: 'form', id: 'form', class: '', legend: 'User information', btnText: 'Register', icon: 'user_add' }
-  form = hospitalForm;
+  form = registrationForm;
 
-  edit = new BehaviorSubject<{ edit: boolean }>({ edit: false });
+  edit = signal(false);
 
   register(res: { value: RegisterVm, edit: boolean }) {
     this.conf.open(ConfirmationComponent, {
@@ -62,32 +61,6 @@ export class RegisterComponent {
   }
 }
 
-const hospitalForm: FormDataVm[] = [
-  {
-    name: 'hospitalName',
-    control_type: 'textbox',
-    label: 'Hospital name',
-    required: true,
-    title: 'The name of the hospital',
-    validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 100 }]
-  },
-  {
-    name: 'longitude',
-    control_type: 'number',
-    required: true,
-    title: 'Longitude',
-    validators: [{ property: 'min', check: 0.3 }, { property: 'max', check: 12 }],
-    label: 'Longitude'
-  },
-  {
-    name: 'latitude',
-    control_type: 'number',
-    required: true,
-    title: 'Latitude',
-    validators: [{ property: 'min', check: 0.3 }, { property: 'max', check: 12 }],
-    label: 'Latitude'
-  }
-]
 
 const registrationForm: FormDataVm[] = [
   {
@@ -107,15 +80,6 @@ const registrationForm: FormDataVm[] = [
     label: 'Full name',
     required: true,
     title: 'Full name of the staff',
-    type: 'text',
-  },
-  {
-    name: 'rank',
-    control_type: 'textbox',
-    validators: [{ property: 'minLen', check: 5 }, { property: 'maxLen', check: 50 }],
-    label: 'Rank',
-    required: true,
-    title: 'Rank',
     type: 'text',
   },
   {
@@ -144,6 +108,13 @@ const registrationForm: FormDataVm[] = [
     title: 'Your title',
     required: true,
     options: [{ value: 'Dr.' }, { value: 'Mr.' }, { value: 'Mrs.' }, { value: 'Ms.' }, { value: 'Prof.' }]
+  },
+  {
+    name: 'hospitalsID',
+    control_type: 'dropdown',
+    label: 'Hospital',
+    title: 'Select hospital',
+    required: true,
   },
   {
     name: 'phoneNumber',

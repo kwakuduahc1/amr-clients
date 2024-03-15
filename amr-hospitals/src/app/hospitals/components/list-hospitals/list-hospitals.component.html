@@ -1,0 +1,4 @@
+<h1 class="h1 text-center">Manage hospitals</h1>
+<app-form-builder [controls]="form" [props]="props" (submit)="addHosp($event)" [status]="edit()" />
+
+<app-table-display [data]="hosps()" [headers]="headers" (viewClick)="view($event)" />

@@ -8,6 +8,7 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { HttpClientModule, provideHttpClient, withFetch, withInterceptors, withXsrfConfiguration } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BsControlsModule } from '../bs-controls/bs-controls-module';
+import { environment } from '../environments/environment';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { HttpInterceptorProviders } from './interceptors/InterceptorProviders';
 
@@ -23,7 +24,7 @@ export const appConfig: ApplicationConfig = {
       JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter,
-          // allowedDomains: [environment.AppUrl]
+          allowedDomains: [environment.AppUrl]
         },
       }),
     ),
@@ -34,7 +35,7 @@ export const appConfig: ApplicationConfig = {
       withXsrfConfiguration({ cookieName: 'XSRF-TOKEN', headerName: 'X-XSRF-TOKEN' })
     ),
     provideRouter(routes, withComponentInputBinding(), withRouterConfig({ paramsInheritanceStrategy: 'always' })),
-    provideClientHydration(),
+    // provideClientHydration(),
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),

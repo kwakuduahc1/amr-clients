@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, input } from '@angular/core';
 import { CheckBoxes, Controls, DropDowns, FormDataVm, FormProperties, PasswordBoxes } from '../../model/elements';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from "@angular/material/button";
@@ -26,7 +26,6 @@ import { DateTimeBoxComponent } from '../fields/date-time-box/date-time-box.comp
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    MatIconModule,
     TextBoxControlComponent,
     PasswordControlBoxComponent,
     SearchBoxComponent,
@@ -45,18 +44,22 @@ import { DateTimeBoxComponent } from '../fields/date-time-box/date-time-box.comp
 })
 export class FormBuilderComponent {
 
-  @Input({ required: true }) controls!: FormDataVm[];
-  @Input({ required: false }) props: FormProperties = { id: 'form', name: 'form', class: '', legend: 'Complete the form', btnText: 'Save', direction: false, icon: 'save' }
   form: FormGroup = new FormGroup({});
+  protected _controls: Controls[] = [];
+
+  status = input.required<boolean>();
+  controls = input.required<FormDataVm[]>();
+  props = input<FormProperties>(
+    { id: 'form', name: 'form', class: '', legend: 'Complete the form', btnText: 'Save', direction: false, icon: 'save' }
+  )
+
   @Output() submit = new EventEmitter<any>(true);
-  @Input() status!: Observable<{ edit: boolean }>;
-  _controls: Controls[] = [];
 
   ngOnInit(): void {
-    for (let i = 0; i < this.controls.length; i++) {
-      this._controls.push(transformBsControl(this.controls[i]));
-      if (this.controls[i].children) {
-        this._controls[i].children = this.controls[i].children?.map(c => transformBsControl(c));
+    for (let i = 0; i < this.controls().length; i++) {
+      this._controls.push(transformBsControl(this.controls()[i]));
+      if (this.controls()[i].children) {
+        this._controls[i].children = this.controls()[i].children?.map(c => transformBsControl(c));
       }
     }
 

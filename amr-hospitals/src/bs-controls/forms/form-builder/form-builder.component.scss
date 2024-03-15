@@ -1,22 +1,30 @@
-form {
+.forms-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 2.5px;
+  flex-direction: column;
 
-  button {
-    align-self: center;
+  .form-button {
+    align-self: flex-start;
   }
 }
 
-form:has(#display:checked) {
-  flex-direction: column;
-  gap: 0.2rem;
+.form-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5px;
+
 }
+
+
+// form:has(#display:checked) {
+//   flex-direction: column;
+//   gap: 0.2rem;
+// }
 
 .legend_area {
   display: flex;
 
-  mat-icon {
-    cursor: pointer;
-  }
+  // mat-icon {
+  //   cursor: pointer;
+  // }
 }

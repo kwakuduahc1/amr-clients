@@ -9,5 +9,9 @@ export const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent
+    },
+    {
+        path: 'hospitals',
+        loadChildren: () => import('./hospitals/hospitals.module').then(x => x.HospitalsModule)
     }
 ];

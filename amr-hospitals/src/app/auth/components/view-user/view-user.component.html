@@ -22,6 +22,6 @@
     </mat-card-actions>
 </mat-card>
 @if (act;as a) {
-<app-form-builder [controls]="form" [props]="props" [status]="edit" (submit)="approve($event)" />
+<app-form-builder [controls]="form" [props]="props" [status]="edit()" (submit)="approve($event)" />
 }
 }
