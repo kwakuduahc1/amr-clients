@@ -1,6 +1,8 @@
+$gap: 0.5px;
+
 .forms-container {
   display: flex;
-  gap: 2.5px;
+  gap: $gap;
   flex-direction: column;
 
   .form-button {
@@ -10,9 +12,9 @@
 
 .form-controls {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  gap: 1.5px;
-
+  gap: $gap;
 }
 
 
@@ -22,6 +24,7 @@
 // }
 
 .legend_area {
+  margin: 1rem;
   display: flex;
 
   // mat-icon {

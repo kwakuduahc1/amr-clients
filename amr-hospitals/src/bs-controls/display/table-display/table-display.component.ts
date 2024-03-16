@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Signal, ViewChild, WritableSignal, computed, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, input, output, viewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'
-import { Subscription, map, of } from 'rxjs';
+import { MatFormField, MatInput } from '@angular/material/input';
+import { MatSort } from '@angular/material/sort';
+import { MatTable } from '@angular/material/table'
+import { Subscription, filter, map, startWith, takeUntil, tap } from 'rxjs';
 import { TableHeaders } from '../../model/elements';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 import { ActivityProvider } from '../../../app/providers/ActivityProvider';
 
 @Component({
@@ -16,14 +16,14 @@ import { ActivityProvider } from '../../../app/providers/ActivityProvider';
   standalone: true,
   imports: [
     CommonModule,
-    MatTableModule,
-    MatSortModule,
-    MatInputModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatIconModule
+    MatTable,
+    MatSort,
+    MatInput,
+    MatButton,
+    MatTooltip,
+    MatIcon,
+    MatFormField
   ],
   templateUrl: './table-display.component.html',
   styleUrl: './table-display.component.scss',
@@ -35,46 +35,61 @@ export class TableDisplayComponent<T> implements OnInit {
   headers = input.required<TableHeaders>();
   isProcessing = inject(ActivityProvider).act().isProcessing;
 
-  @Output() private viewClick = new EventEmitter(true);
-  @Output() private deleteClick = new EventEmitter(true);
-  @Output() private editButonClicked = new EventEmitter(true);
+  private viewClick = output<T>();
+  private deleteClick = output<T>();
+  private editButonClicked = output<T>();
 
-  columns = computed(() => Object.keys(this.headers()));
+  search = input<boolean>(true);
+  columns!: string[];
   control = new FormControl('');
+  data$ = this.control.valueChanges
+    .pipe(
+      startWith(''),
+      map(x => (x as string).toLowerCase()),
+      map(x => this.data()
+        .filter((f: any) =>
+          this.columns.some(o => (f[o] as string)?.toLowerCase()?.includes(x))
+        )))
 
-  private sub$ = new Subscription();
+  desRef = inject(DestroyRef);
 
-  dsrc!: Signal<MatTableDataSource<T>>
-
-
-
-  private intial() {
-    let mtDt = new MatTableDataSource<T>(this.data())
-    if (this.search) {
-      mtDt.filter = (this.control.value as string).trim().toLowerCase()
-    }
-    this.dsrc = computed<MatTableDataSource<T>>(() => mtDt);
-  }
-
-  updateTbl(i: T) {
-    this.data().unshift(i);
-    this.intial();
-  }
-
-  @Input() search = true;
-  @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit() {
-    this.intial();
-    if (this.search) {
-      this.sub$.add(
-        this.control.valueChanges
-          .pipe(map(x => (x as string)
-            .trim()
-            .toLowerCase()))
-          .subscribe(x => this.dsrc().filter = x))
+    this.columns = Object.keys(this.headers());
+  }
+
+  protected cellData(r: any, c: string) {
+    switch (c) {
+      case 'edit':
+        return 'Edit';
+      case 'view':
+        return 'View';
+      case 'delete':
+        return 'Delete'
+      default:
+        return r[c]
     }
   }
+
+  private intial() {
+    // let mtDt = new MatTableDataSource<T>(this.data())
+    // if (this.search()) {
+    //   mtDt.filter = (this.control.value as string).trim().toLowerCase()
+    // }
+    //this.dsrc = computed(() => this.data());
+  }
+
+  // ngOnInit() {
+  //   // this.intial();
+  //   // if (this.search()) {
+  //   //   this.sub$.add(
+  //   //     this.control.valueChanges
+  //   //       .pipe(map(x => (x as string)
+  //   //         .trim()
+  //   //         .toLowerCase()))
+  //   //       .subscribe(x => this.dsrc().filter = x))
+  //   // }
+  // }
 
   rowClickAction(i: T) {
     this.viewClick.emit(i);
@@ -84,21 +99,7 @@ export class TableDisplayComponent<T> implements OnInit {
     this.deleteClick.emit(i)
   }
 
-  editAction(i: any) {
+  editAction(i: T) {
     this.editButonClicked.emit(i)
-  }
-
-  ngOnDestroy(): void {
-    this.sub$.unsubscribe();
-  }
-
-  removeRow(ix: number) {
-    this.data().splice(ix, 1);
-    this.intial();
-  }
-
-  editRow(ix: number, row: T) {
-    this.data()[ix] = row;
-    this.intial();
   }
 }

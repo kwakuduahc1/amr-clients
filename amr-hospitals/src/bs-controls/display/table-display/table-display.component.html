@@ -1,13 +1,68 @@
 <div class="bs_tbl_head">
-    @if (search) {
+    @if (search()) {
     <div>
         <mat-form-field>
-            <input matInput [formControl]="control" placeholder="Filter">
+            <input matInput [value]="" [formControl]="control" placeholder="Filter">
         </mat-form-field>
     </div>
     }
     <div>
-        <table class="table" mat-table [dataSource]="dsrc()" matSort>
+        <table>
+            <thead>
+                <tr>
+                    @for (h of columns; track $index) {
+                    @if (!(h === 'delete' || h === 'view' || h === 'edit')) {
+                    <th>{{headers()[h]}}</th>
+                    }
+                    @if (h === 'view') {
+                    <th>{{ headers()[h] }}</th>
+                    }
+                    @if(h === 'edit') {
+                    <th>{{ headers()[h] }}</th>
+                    }
+                    @if(h === 'delete') {
+                    <th>{{ headers()[h] }}</th>
+                    }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (d of data$|async; track $index) {
+                <tr>
+                    @for (c of columns; track $index) {
+                    @if (!(c === 'delete' || c === 'view' || c === 'edit')) {
+                    <td>{{cellData(d, c)}}</td>
+                    }
+                    @if(c === 'edit') {
+                    @if(c === 'edit') {
+                    <td>
+                        <button type="button" [disabled]="isProcessing" (click)="editAction(d)" matTooltip="Edit"
+                            mat-raised-button color="accent">
+                            <mat-icon>edit</mat-icon> Edit
+                        </button>
+                    </td>
+                    }
+                    }
+                    @if (c === 'view') {
+                    <button type="button" [disabled]="isProcessing" (click)="rowClickAction(d)" matTooltip="View"
+                        mat-raised-button color="primary">
+                        <mat-icon>folder_open</mat-icon> View
+                    </button>
+                    }
+                    @if(c === 'delete') {
+                    <td>
+                        <button type="button" [disabled]="isProcessing" (click)="deleteAction(d)" matTooltip="Delete"
+                            mat-raised-button color="warn">
+                            <mat-icon>delete</mat-icon> Delete
+                        </button>
+                    </td>
+                    }
+                    }
+                </tr>
+                }
+            </tbody>
+        </table>
+        <!-- <table class="table" mat-table [dataSource]="data()" matSort>
             @for (h of columns(); track $index) {
             @if (!(h === 'delete' || h === 'view' || h === 'edit')) {
             <ng-container [matColumnDef]="h">
@@ -51,6 +106,6 @@
             }
             <tr mat-header-row *matHeaderRowDef="columns()"></tr>
             <tr mat-row *matRowDef="let row; columns: columns();"></tr>
-        </table>
+        </table> -->
     </div>
 </div>

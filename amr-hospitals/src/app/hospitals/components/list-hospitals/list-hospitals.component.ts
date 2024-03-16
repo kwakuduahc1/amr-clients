@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, model, signal } from '@angular/core';
 import { Hospitals } from '../../../model/dtos';
 import { FormDataVm, FormProperties, TableHeaders } from '../../../../bs-controls/model/elements';
 import { filter, map, switchMap, tap } from 'rxjs';
@@ -23,10 +23,10 @@ import { TableDisplayComponent } from '../../../../bs-controls/display/table-dis
 })
 export class ListHospitalsComponent {
 
-  hosps = input.required<Hospitals[]>({ alias: 'hospitals' });
+  hosps = model.required<Hospitals[]>({ alias: 'hospitals' });
   form = hospitalForm;
   props: FormProperties = { name: 'form', id: 'hosp_form', class: '', legend: 'Hospital information', btnText: 'Add', icon: 'add' }
-  headers: TableHeaders = { hospitalName: 'Hospital', type: 'Type', view: 'View' }
+  headers: TableHeaders = { hospitalName: 'Hospital', type: 'Type', view: 'View', edit: 'Edit' }
   protected edit = signal<boolean>(false);
 
   private conf = inject(MatDialog);
@@ -44,8 +44,10 @@ export class ListHospitalsComponent {
       map(() => {
         return res.value
       }),
-      switchMap(x => this.http.add(x)),
-      tap(x => this.hosps().unshift(x)),
+      // switchMap(x => this.http.add(x)),
+      tap((x: Hospitals) => {
+        this.hosps.update(() => [x, ...this.hosps()]);
+      }),
       switchMap(x => this.snack.open(`A new hospital account was created for ${res.value.hospitalName}`, 'Dismiss', {
         panelClass: 'snackbar-info'
       }).afterDismissed())

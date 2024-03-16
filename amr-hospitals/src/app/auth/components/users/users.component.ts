@@ -36,7 +36,7 @@ export class UsersComponent {
 
   act = inject(ActivityProvider).act()
 
-  users = input.required<RegisterVm[]>();
+  users = input.required<IUsers[]>();
 
   headers: TableHeaders = { userName: 'User name', fullName: 'Full name', view: 'View' }
 
@@ -55,7 +55,7 @@ export class UsersComponent {
       .subscribe()
   }
 
-  view(i: RegisterVm) {
+  view(i: IUsers) {
     // this.diag.open(ViewUserComponent, {
     //   data: { user: i, teams: this.teams() }
     // })
