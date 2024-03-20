@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, input, output, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, input, output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput } from '@angular/material/input';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table'
-import { Subscription, filter, map, startWith, takeUntil, tap } from 'rxjs';
+import { map, startWith } from 'rxjs';
 import { TableHeaders } from '../../model/elements';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { ActivityProvider } from '../../../app/providers/ActivityProvider';
+import { DataCellDirective } from './data-cell.directive';
 
 @Component({
   selector: 'app-table-display',
@@ -23,7 +24,8 @@ import { ActivityProvider } from '../../../app/providers/ActivityProvider';
     MatButton,
     MatTooltip,
     MatIcon,
-    MatFormField
+    MatFormField,
+    DataCellDirective
   ],
   templateUrl: './table-display.component.html',
   styleUrl: './table-display.component.scss',
@@ -50,9 +52,6 @@ export class TableDisplayComponent<T> implements OnInit {
         .filter((f: any) =>
           this.columns.some(o => (f[o] as string)?.toLowerCase()?.includes(x))
         )))
-
-  desRef = inject(DestroyRef);
-
 
   ngOnInit() {
     this.columns = Object.keys(this.headers());

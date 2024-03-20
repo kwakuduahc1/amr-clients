@@ -7,7 +7,6 @@
   </mat-autocomplete>
   @if(control().errors; as err){
   <mat-error>
-    <span></span>
     <span *ngIf="err?.['errors']['maxlength']">{{err?.['errors']['maxlength'].requiredLength}}
       max chars</span>
     <span *ngIf="err?.['touched'] && err?.['errors']['required']">Required</span>

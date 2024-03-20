@@ -1,0 +1,6 @@
+@AMR_Study_HostAddress = http://localhost:5273
+
+GET {{AMR_Study_HostAddress}}/hospitals/
+Accept: application/json
+
+###

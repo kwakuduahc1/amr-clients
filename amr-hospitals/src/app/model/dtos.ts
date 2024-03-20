@@ -12,6 +12,8 @@ export interface Organisms {
 }
 
 export interface CultureResults {
+    antibiotics: Antibiotics[];
+    diagnoses: Diagnoses[];
     resultsID: number;
     organismsID: number;
     hospitalsID: number;

@@ -6,12 +6,15 @@
         </mat-form-field>
     </div>
     }
-    <div>
-        <table>
-            <thead>
+    <div class="table-container">
+        <table class="table">
+            @if (headers().caption) {
+            <caption>{{headers().caption}}</caption>
+            }
+            <thead class="thead">
                 <tr>
                     @for (h of columns; track $index) {
-                    @if (!(h === 'delete' || h === 'view' || h === 'edit')) {
+                    @if (!(h=== 'caption'|| h === 'delete' || h === 'view' || h === 'edit')) {
                     <th>{{headers()[h]}}</th>
                     }
                     @if (h === 'view') {
@@ -26,14 +29,13 @@
                     }
                 </tr>
             </thead>
-            <tbody>
-                @for (d of data$|async; track $index) {
-                <tr>
+            <tbody class="tbody">
+                @for (d of data$|async; track $index;) {
+                <tr ariaLabel="row{{$index}}">
                     @for (c of columns; track $index) {
-                    @if (!(c === 'delete' || c === 'view' || c === 'edit')) {
-                    <td>{{cellData(d, c)}}</td>
+                    @if (!(c === 'delete' || c=== 'caption' || c === 'view' || c === 'edit')) {
+                    <td data-cell>{{cellData(d, c)}}</td>
                     }
-                    @if(c === 'edit') {
                     @if(c === 'edit') {
                     <td>
                         <button type="button" [disabled]="isProcessing" (click)="editAction(d)" matTooltip="Edit"
@@ -41,7 +43,6 @@
                             <mat-icon>edit</mat-icon> Edit
                         </button>
                     </td>
-                    }
                     }
                     @if (c === 'view') {
                     <button type="button" [disabled]="isProcessing" (click)="rowClickAction(d)" matTooltip="View"

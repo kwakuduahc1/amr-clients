@@ -23,6 +23,7 @@
                 @for (c of ctrl.children; track $index;) {
                 <app-textbox-control [fgrp]="form" [control]="fmChildArray(ctrl.name, $index)" [ctrl]="c" />
                 }
+                <button type="button">Add</button>
                 }
                 }
                 @case ('search') {

@@ -103,6 +103,7 @@ export interface DynamicTableData {
 }
 
 export interface TableHeaders {
+    caption?: string;
     [key: string]: any;
 }
 

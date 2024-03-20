@@ -1,4 +1,4 @@
-import { Component, inject, input, model, signal } from '@angular/core';
+import { Component, inject, model, signal } from '@angular/core';
 import { Hospitals } from '../../../model/dtos';
 import { FormDataVm, FormProperties, TableHeaders } from '../../../../bs-controls/model/elements';
 import { filter, map, switchMap, tap } from 'rxjs';
@@ -9,6 +9,7 @@ import { HospitalsHttpService } from '../../hospitals-http-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { TableDisplayComponent } from '../../../../bs-controls/display/table-display/table-display.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-hospitals',
@@ -18,6 +19,7 @@ import { TableDisplayComponent } from '../../../../bs-controls/display/table-dis
     TableDisplayComponent,
     CommonModule
   ],
+  // providers: [Router],
   templateUrl: './list-hospitals.component.html',
   styleUrl: './list-hospitals.component.scss'
 })
@@ -26,12 +28,14 @@ export class ListHospitalsComponent {
   hosps = model.required<Hospitals[]>({ alias: 'hospitals' });
   form = hospitalForm;
   props: FormProperties = { name: 'form', id: 'hosp_form', class: '', legend: 'Hospital information', btnText: 'Add', icon: 'add' }
-  headers: TableHeaders = { hospitalName: 'Hospital', type: 'Type', view: 'View', edit: 'Edit' }
+  headers: TableHeaders = { caption: 'List of hospitals in the project', hospitalName: 'Hospital', type: 'Type', view: 'View', edit: 'Edit' }
   protected edit = signal<boolean>(false);
 
   private conf = inject(MatDialog);
   private http = inject(HospitalsHttpService);
   private snack = inject(MatSnackBar);
+
+  constructor(private router: Router) { }
 
   ngOnInit() { }
 
@@ -44,7 +48,7 @@ export class ListHospitalsComponent {
       map(() => {
         return res.value
       }),
-      // switchMap(x => this.http.add(x)),
+      switchMap(x => this.http.add(x)),
       tap((x: Hospitals) => {
         this.hosps.update(() => [x, ...this.hosps()]);
       }),
@@ -55,8 +59,9 @@ export class ListHospitalsComponent {
       .subscribe();
   }
 
-  view(ev: any) {
-    console.log(ev);
+  view(ev: Hospitals) {
+    console.log(ev)
+    this.router.navigate(['/hospitals', ev.hospitalsID])
   }
 }
 
