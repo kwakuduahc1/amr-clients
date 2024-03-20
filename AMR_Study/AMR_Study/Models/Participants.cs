@@ -25,11 +25,11 @@ namespace AMR_Study.Models
         public required string Gender { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,15)")]
+        [Column(TypeName = "decimal(22,16)")]
         public decimal Longitude { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,15)")]
+        [Column(TypeName = "decimal(22,16)")]
         public decimal Latitude { get; set; }
 
         public virtual ICollection<Illnesses>? Illnesses { get; set; }

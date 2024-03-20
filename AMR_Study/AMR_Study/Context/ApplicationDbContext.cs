@@ -45,16 +45,16 @@ namespace AMR_Study.Context
                     HospitalName = "Tech Hospital",
                     Type = "University hospital",
                     HospitalsID = (short)1,
-                    Latitude = 1.2M,
-                    Longitude = 0.8M
+                    Latitude = 6.686147166M,
+                    Longitude = -1.574256834M,
                 },
                 new
                 {
                     HospitalName = "Kumasi South Hospital",
                     Type = "Regional hosppital",
                     HospitalsID = (short)2,
-                    Latitude = 1.3M,
-                    Longitude = 0.5M
+                    Latitude =  6.651466569M,
+                    Longitude = -1.5867087246M,
                 }
                 ));
             //builder.Entity<PatientDrugs>(x => x.HasNoKey());

@@ -1,138 +1,39 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
-import { CultureResults, Hospitals, Organisms } from '../../../model/dtos';
-import { FormDataVm, FormProperties } from '../../../../bs-controls/model/elements';
+import { ChangeDetectionStrategy, Component, Signal, computed, input } from '@angular/core';
+import { Hospitals } from '../../../model/dtos';
 import { FormBuilderComponent } from '../../../../bs-controls/forms/form-builder/form-builder.component';
-import { OrganismsService } from '../../../organisms/organisms-http-service';
+import { GoogleMap } from '@angular/google-maps';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-view-hospital',
   standalone: true,
   imports: [
     CommonModule,
-    FormBuilderComponent
+    FormBuilderComponent,
+    GoogleMap,
+    MatIcon,
+    MatButton,
+    RouterLink
   ],
   templateUrl: './view-hospital.component.html',
   styleUrl: './view-hospital.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewHospitalComponent {
-  protected organisms = input.required<Organisms[]>();
-  hosp = input.required<Hospitals>({
-    alias: 'hospital'
-  });
-
-  form = cultureForms;
-  props: FormProperties = { name: 'form', id: 'culture_form', class: '', legend: 'Culture results', btnText: 'Add', icon: 'add' }
-  protected edit = signal<boolean>(false);
-  private http = inject(OrganismsService);
-  ngOnInit(): void {
-    let orgs = this.organisms().map(x => {
-      return {
-        key: x.organism,
-        value: x.organismsID
-      }
-    })
-    this.form[0].options = orgs;
-  }
-
-  save(res: { value: CultureResults, edit: boolean }) {
-    // res.value.antibiotics = [];
-    // res.value.diagnoses = [];
-    this.http.add(res.value).subscribe()
-  }
-}
-
-const cultureForms: FormDataVm[] = [
-  {
-    name: 'organismsID',
-    control_type: 'dropdown',
-    label: 'Organism',
-    required: true,
-    title: 'Select the organism',
-  },
-  {
-    name: 'results',
-    control_type: 'dropdown',
-    label: 'Results',
-    required: true,
-    options: [{ value: 'Resistant' }, { value: 'Sensitive' }, { value: 'Indeterminate' }]
-  },
-  {
-    name: 'gender',
-    control_type: 'dropdown',
-    label: 'Gender',
-    options: [{ value: 'Male' }, { value: 'Female' }],
-    required: true
-  },
-  {
-    name: 'age',
-    control_type: 'number',
-    label: 'Age',
-    required: true,
-    validators: [{ property: 'min', check: 1 }, { property: 'max', check: 120 }]
-  },
-  {
-    name: 'patientType',
-    control_type: 'dropdown',
-    label: 'Type',
-    required: true,
-    options: [{ value: 'IPD' }, { value: 'OPD' }]
-  },
-  {
-    name: 'los',
-    control_type: 'number',
-    label: 'LoS',
-    required: true,
-    validators: [{ property: 'min', check: 0 }, { property: 'max', check: 180 }],
-  },
-  {
-    name: 'outcome',
-    control_type: 'dropdown',
-    label: 'Outcome',
-    required: true,
-    options: [{ value: 'Died' }, { value: 'Discharged' }]
-  },
-  {
-    name: 'dateDone',
-    control_type: 'date',
-    required: true,
-    label: 'Date done',
-    validators: [{ property: 'maxTodayDate', check: '' }]
-  },
-  {
-    name: 'diagnoses',
-    control_type: 'textbox',
-    required: true,
-    label: 'Diagnosis',
-    children: [
-      {
-        name: 'diagnosis',
-        label: 'Diagnosis',
-        required: true,
-        control_type: 'textbox',
-        validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
+  hosp = input.required<Hospitals>({ alias: 'hospital' });
+  mapOpts: Signal<google.maps.MapOptions> = computed(() => {
+    return {
+      center: {
+        lng: this.hosp().latitude,
+        lat: this.hosp().longitude,
+        format: 'png',
+        scale: 2,
+        marker: `size=tiny|color=black|label=${this.hosp().hospitalName}`
       },
-      {
-        name: 'isPrimary',
-        label: 'Primary',
-        control_type: 'checkbox'
-      }
-    ]
-  },
-  {
-    name: 'antibiotics',
-    control_type: 'textbox',
-    required: true,
-    label: 'Antibiotics',
-    children: [
-      {
-        name: 'drugName',
-        label: 'Drug',
-        required: true,
-        control_type: 'textbox',
-        validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
-      }
-    ]
-  }
-]
+      zoom: 14
+    }
+  })
+}

@@ -1,2 +1,11 @@
 <h1 class="txt-header-3">{{hosp().hospitalName}}</h1>
-<app-form-builder [controls]="form" [props]="props" [status]="edit()" (submit)="save($event)" />
+<!-- <sub>{{hosp().type}}</sub> -->
+<div class="map-container">
+    <google-map class="map" height="250px" width="100%" [options]="mapOpts()" />
+</div>
+<div class="add-btn-container">
+    <button routerLink="/hospitals/{{hosp().hospitalsID}}/add-results" routerLinkActive="router-link-active" role="link"
+        class="add-btn" type="button" color="primary" mat-flat-button>
+        <mat-icon>add</mat-icon>
+        Add Results</button>
+</div>

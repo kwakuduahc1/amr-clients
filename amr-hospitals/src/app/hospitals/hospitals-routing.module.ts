@@ -4,6 +4,7 @@ import { ListHospitalsComponent } from './components/list-hospitals/list-hospita
 import { HospitalsHttpService } from './hospitals-http-service';
 import { ViewHospitalComponent } from './components/view-hospital/view-hospital.component';
 import { OrganismsService } from '../organisms/organisms-http-service';
+import { AddResultsComponent } from './components/add-results/add-results.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,14 @@ const routes: Routes = [
   {
     path: ':id',
     component: ViewHospitalComponent,
+    resolve: {
+      // organisms: () => inject(OrganismsService).list(),
+      hospital: (route = inject(ActivatedRouteSnapshot)) => inject(HospitalsHttpService).find(Number(route.paramMap.get('id') as string))
+    }
+  },
+  {
+    path: ':id/add-results',
+    component: AddResultsComponent,
     resolve: {
       organisms: () => inject(OrganismsService).list(),
       hospital: (route = inject(ActivatedRouteSnapshot)) => inject(HospitalsHttpService).find(Number(route.paramMap.get('id') as string))

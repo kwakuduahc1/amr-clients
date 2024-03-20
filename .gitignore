@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+amr-hospitals/src/bs-controls/forms/form-builder/FILE.json

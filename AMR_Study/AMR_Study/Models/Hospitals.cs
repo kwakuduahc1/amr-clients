@@ -12,12 +12,12 @@ namespace AMR_Study.Models
         public required string HospitalName { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,15)")]
+        [Column(TypeName = "decimal(22,18)")]
         //[Range(0.3, 12.0)]
         public decimal Longitude { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 15)")]
+        [Column(TypeName = "decimal(22, 18)")]
         //[Range(0.3, 12.0)]
         public decimal Latitude { get; set; }
 

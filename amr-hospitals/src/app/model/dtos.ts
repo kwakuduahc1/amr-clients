@@ -3,6 +3,7 @@ export interface Hospitals {
     longitude: number;
     latitude: number;
     hospitalName: string;
+    type: string;
 }
 
 export interface Organisms {

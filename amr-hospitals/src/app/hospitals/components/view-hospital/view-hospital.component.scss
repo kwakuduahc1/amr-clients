@@ -1,3 +1,19 @@
 :host {
   display: block;
 }
+
+sub {
+  position: static;
+  margin: 0 auto;
+}
+
+.map-container {
+  width: 90%;
+  margin: 2.5%;
+}
+
+// class name .add-btn center it within its container
+.add-btn-container {
+  display: flex;
+  justify-content: center;
+}
