@@ -1,0 +1,38 @@
+<div [formGroup]="form()">
+    <div [formGroupName]="array_name()">
+        @for (ctrls of carrys(); track $index) {
+        @for(ctrl of ctrls;track $index){
+        @switch (ctrl.control_type) {
+        @case ('textbox') {
+        {{ $index}}
+        <app-child-textbox-control [cp]="getFmCtrl(ctrl)" />
+        }
+        <!-- @case ('search') {
+    <app-search-box [form]="form()" [ctrl]="ctrl" />
+    }
+    @case ('password') {
+    <app-password-control-box [fgrp]="form()" [control]="getFmCtrl($index)" [ctrl]="ctrl" />
+    }
+    @case ('number') {
+    <app-number-box [fgrp]="form()" [control]="getFmCtrl($index)" [ctrl]="ctrl" />
+    }
+    @case ('date') {
+    <app-date-box [fgrp]="form()" [control]="getFmCtrl($index)" [ctrl]="ctrl" />
+    }
+    @case ('date-time') {
+    <app-date-time-box [fgrp]="form()" [control]="getFmCtrl($index)" [ctrl]="ctrl" />
+    } -->
+        <!-- @case ('dropdown') {
+        <app-dropdown-boxes [ctrl]="toDropDown(ctrl)" [control]="getFmCtrl($index)" />
+        } -->
+        <!-- @case ('checkbox') {
+        <app-checkboxes [form]="form()" [ctrl]="toCheck(ctrl)" />
+        } -->
+        }
+        }
+        }
+    </div>
+    <button type="button" title="Add instance" class="form-button" (click)="addCtrl()" mat-icon-button>
+        <mat-icon>plus</mat-icon>
+    </button>
+</div>

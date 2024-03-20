@@ -6,25 +6,13 @@
             <legend>{{p.legend}}
             </legend>
             }
-            <!-- <mat-icon (click)="display.checked = !display.checked">{{display?.checked ? 'arrow_circle_right':
-                'arrow_circle_down'}}</mat-icon> -->
-            <!-- <input hidden type="checkbox" [checked]="p.direction" #display id="display" class="display"
-                name="display" id="display" title="Change layout"> -->
         </div>
         <div class="forms-container">
             <div class="form-controls">
                 @for(ctrl of _controls;track ctrl.name){
                 @switch (ctrl.control_type) {
                 @case ('textbox') {
-                @if (isFormControl(ctrl.name)) {
                 <app-textbox-control [control]="getFmCtrl(ctrl.name)" [ctrl]="ctrl" />
-                }
-                @else {
-                @for (c of ctrl.children; track $index;) {
-                <app-textbox-control [fgrp]="form" [control]="fmChildArray(ctrl.name, $index)" [ctrl]="c" />
-                }
-                <button type="button">Add</button>
-                }
                 }
                 @case ('search') {
                 <app-search-box [form]="form" [ctrl]="ctrl" />
@@ -47,12 +35,15 @@
                 @case ('checkbox') {
                 <app-checkboxes [form]="form" [ctrl]="toCheck(ctrl)" />
                 }
-                <!-- @case ('autocomplete') {
-            <app-filter-dropdown-box [form]="form" [ctrl]="toDropDown(ctrl)" />
-            } -->
+                }
+                @if (ctrl.children) {
+                <fieldset>{{ctrl.name}}</fieldset>
+                <app-form-children [form]="form" [fms]="getFdm(ctrl.name)" [farray]="getFmArray(ctrl.name)"
+                    [array_name]="ctrl.name"></app-form-children>
                 }
                 }
             </div>
+            <button type="button" (click)="logForm()">Log</button>
             <app-act-buttons class="form-button" (btn_click)="f_submit($event, status())" [form]="form" type="button"
                 [icon]="p.icon" [title]="'Save the form'" [text]="p.btnText" />
         </div>

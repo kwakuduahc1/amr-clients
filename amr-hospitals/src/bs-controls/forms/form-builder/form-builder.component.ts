@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, input } from '@angular/core';
 import { CheckBoxes, Controls, DropDowns, FormDataVm, FormProperties, PasswordBoxes } from '../../model/elements';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from "@angular/material/button";
@@ -10,12 +10,11 @@ import { FilterDropdownBoxComponent } from '../fields/filter-dropdown-box/filter
 import { NumberBoxComponent } from '../fields/number-box/number-box.component';
 import { SearchBoxComponent } from '../fields/search-box/search-box.component';
 import { TextBoxControlComponent } from '../fields/textbox-control/textbox-control.component';
-import { MatIconModule } from '@angular/material/icon';
 import { PasswordControlBoxComponent } from '../fields/password-control-box/password-control-box.component';
 import { ActButtonsComponent } from '../../buttons/act-buttons/act-buttons.component';
-import { Observable } from 'rxjs';
 import { transformBsControl } from '../../bs-control-tranformer';
 import { DateTimeBoxComponent } from '../fields/date-time-box/date-time-box.component';
+import { FormChildrenComponent } from '../form-children/form-children.component';
 
 
 
@@ -36,7 +35,8 @@ import { DateTimeBoxComponent } from '../fields/date-time-box/date-time-box.comp
     CheckboxesComponent,
     FilterDropdownBoxComponent,
     ActButtonsComponent,
-    DateTimeBoxComponent
+    DateTimeBoxComponent,
+    FormChildrenComponent
   ],
   templateUrl: './form-builder.component.html',
   styleUrl: './form-builder.component.scss',
@@ -66,10 +66,6 @@ export class FormBuilderComponent {
     this._controls.forEach(o => {
       if (o.children) {
         let fg = new FormBuilder().array([]);
-        o.children.forEach(sc => {
-          let ctrl = new FormControl<string>(sc.value, sc.validators, sc.asyncCustomValidators);
-          fg.push(ctrl);
-        })
         this.form.addControl(o.name, fg);
       }
       else {
@@ -79,22 +75,24 @@ export class FormBuilderComponent {
     });
   }
 
-
   isFormControl(ctrl: string) {
     return this.form.get(ctrl) instanceof FormControl;
   }
 
   getFmCtrl(id: string) {
-    return this.form.controls[id] as FormControl;
+    return this.form.get(id) as FormControl;
+  }
+
+  getFdm(id: string) {
+    return this.controls().find(x => x.name === id)!.children!;
   }
 
   getFmArray(id: string) {
-    return this.form.controls[id] as FormArray;
+    return this.form.get(id) as FormArray;
   }
 
-  fmChildArray(ctrl: string, ix: number) {
-    return (this.getFmArray(ctrl).at(ix) as FormControl)
-    // return (this.form.get(ctrl) as FormArray).at(ix);
+  logForm() {
+    console.log(this.form)
   }
 
   f_submit(vals: any, edit: boolean) {

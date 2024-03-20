@@ -19,8 +19,7 @@ import { TextBoxes } from '../../../model/elements';
 export class TextBoxControlComponent {
 
   control = input.required<FormControl>();
-  @Input({ required: true }) ctrl!: TextBoxes;
-  fgrp = input<FormGroup>();
+  ctrl = input.required<TextBoxes>();
 
   ngOnInit(): void { }
 }

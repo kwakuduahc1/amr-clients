@@ -18,8 +18,8 @@ namespace AMR_Study
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.EnableSensitiveDataLogging(true);
-                options.LogTo(Console.WriteLine, LogLevel.Information);
+                //options.EnableSensitiveDataLogging(true);
+                //options.LogTo(Console.WriteLine, LogLevel.Information);
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 

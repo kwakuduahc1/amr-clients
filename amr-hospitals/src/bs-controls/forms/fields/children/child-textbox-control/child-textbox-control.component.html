@@ -1,11 +1,15 @@
-<mat-form-field>
-    <mat-label class="sr-only">{{ctrl().label}}</mat-label>
-    <mat-select data-test="code" title="{{ctrl().title}}" [formControl]="control()">
-        @for (o of ctrl().options; track $index) {
-        <mat-option [value]="o.value">{{o.key ?? o.value}}</mat-option>
+@if (cp(); as c) {
+<div>
+    <mat-form-field>
+        <mat-label class="sr-only">{{c.name}}</mat-label>
+        <input matInput [type]="c.controls.type??''" data-test="code" title="{{c.controls.title}}"
+            placeholder="{{c.controls.placeholder}}" [formControl]="c.input">
+        @if(c.controls){
+        <datalist>
+
+        </datalist>
         }
-    </mat-select>
-    @if(control()?.touched && control()?.errors){
+        <!-- @if(control().touched && control().errors){
     <mat-error>
         <span
             *ngIf="control().errors?.['maxlength']">{{control().errors?.['maxlength'].requiredLength}}/{{control().errors?.['maxlength'].actualLength}}
@@ -14,7 +18,8 @@
         <span
             *ngIf="control().errors?.['minlength']">{{control().errors?.['minlength']['requiredLength']}}/{{control().errors?.['minlength'].actualLength}}
             min chars </span>
-        <span *ngIf="control().errors?.['touched'] && control()?.errors?.['inList']">Invalid selection</span>
     </mat-error>
-    }
-</mat-form-field>
+    } -->
+    </mat-form-field>
+</div>
+}

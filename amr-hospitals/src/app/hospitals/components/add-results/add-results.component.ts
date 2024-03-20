@@ -47,11 +47,11 @@ export class AddResultsComponent {
 
 const detailsForm: FormDataVm[] = [
   {
-    name: 'organismsID',
-    control_type: 'dropdown',
-    label: 'Organism',
+    name: 'folderID',
+    control_type: 'textbox',
+    label: 'Folder #',
     required: true,
-    title: 'Select the organism',
+    title: 'Hospital/Folder number of the patient',
   },
   {
     name: 'gender',
@@ -60,7 +60,7 @@ const detailsForm: FormDataVm[] = [
     options: [{ value: 'Male' }, { value: 'Female' }],
     required: true
   },
-  {
+  /*{
     name: 'age',
     control_type: 'number',
     label: 'Age',
@@ -94,42 +94,7 @@ const detailsForm: FormDataVm[] = [
     required: true,
     label: 'Date done',
     validators: [{ property: 'maxTodayDate', check: '' }]
-  },
-  {
-    name: 'diagnoses',
-    control_type: 'array',
-    required: true,
-    label: 'Diagnosis',
-    children: [
-      {
-        name: 'diagnosis',
-        label: 'Diagnosis',
-        required: true,
-        control_type: 'textbox',
-        validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
-      },
-      {
-        name: 'isPrimary',
-        label: 'Primary',
-        control_type: 'checkbox'
-      }
-    ]
-  },
-  {
-    name: 'antibiotics',
-    control_type: 'array',
-    required: true,
-    label: 'Antibiotics',
-    children: [
-      {
-        name: 'drugName',
-        label: 'Drug',
-        required: true,
-        control_type: 'textbox',
-        validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
-      }
-    ]
-  },
+  },*/
   {
     name: 'reports',
     control_type: 'array',
@@ -140,7 +105,7 @@ const detailsForm: FormDataVm[] = [
         name: 'organismsID',
         label: 'Organism',
         required: true,
-        control_type: 'dropdown'
+        control_type: 'textbox'
       },
       {
         name: 'antibioticsID',
@@ -156,6 +121,41 @@ const detailsForm: FormDataVm[] = [
         options: [{ value: 'Resistant' }, { value: 'Sensitive' }, { value: 'Indeterminate' }]
       }
     ]
-  }
+  },
+  /* {
+     name: 'diagnoses',
+     control_type: 'array',
+     required: true,
+     label: 'Diagnosis',
+     children: [
+       {
+         name: 'diagnosis',
+         label: 'Diagnosis',
+         required: true,
+         control_type: 'textbox',
+         validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
+       },
+       {
+         name: 'isPrimary',
+         label: 'Primary',
+         control_type: 'checkbox'
+       }
+     ]
+   },
+   {
+     name: 'antibiotics',
+     control_type: 'array',
+     required: true,
+     label: 'Antibiotics',
+     children: [
+       {
+         name: 'drugName',
+         label: 'Drug',
+         required: true,
+         control_type: 'textbox',
+         validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
+       }
+     ]
+   }*/
 ]
 

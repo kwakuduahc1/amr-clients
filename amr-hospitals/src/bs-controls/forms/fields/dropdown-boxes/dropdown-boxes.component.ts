@@ -17,7 +17,7 @@ import { DropDowns, DropDownOptions } from '../../../model/elements';
 })
 export class DropdownBoxesComponent {
   control = input.required<FormControl>();
-  @Input({ required: true }) ctrl!: DropDowns;
+  ctrl = input.required<DropDowns>();
 
   ngOnInit(): void { }
 }
