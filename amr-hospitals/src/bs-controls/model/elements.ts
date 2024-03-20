@@ -37,7 +37,7 @@ export interface FormDataVm {
     };
     children?: FormDataVm[],
     simpleChildren?: number,
-    control_type: 'textbox' | 'password' | 'autocomplete' | 'radio' | 'checkbox' | 'dropdown' | 'number' | 'search' | 'free' | 'date';
+    control_type: 'textbox' | 'password' | 'autocomplete' | 'radio' | 'checkbox' | 'dropdown' | 'number' | 'search' | 'free' | 'date' | 'array';
 }
 
 export interface Controls {
@@ -58,7 +58,7 @@ export interface Controls {
     depends?: Controls;
     children?: Controls[];
     isChild?: boolean;
-    control_type: 'textbox' | 'password' | 'autocomplete' | 'radio' | 'checkbox' | 'dropdown' | 'number' | 'search' | 'free' | 'date' | 'date-time';
+    control_type: 'textbox' | 'password' | 'autocomplete' | 'radio' | 'checkbox' | 'dropdown' | 'number' | 'search' | 'free' | 'date' | 'date-time' | 'array';
 }
 
 export interface TextBoxes extends Controls {

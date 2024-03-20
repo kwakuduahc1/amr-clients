@@ -24,7 +24,7 @@ export class AddResultsComponent {
     alias: 'hospital'
   });
 
-  form = cultureForms;
+  form = detailsForm;
   props: FormProperties = { name: 'form', id: 'culture_form', class: '', legend: 'Culture results', btnText: 'Add', icon: 'add' }
   protected edit = signal<boolean>(false);
   private http = inject(OrganismsService);
@@ -45,20 +45,13 @@ export class AddResultsComponent {
   }
 }
 
-const cultureForms: FormDataVm[] = [
+const detailsForm: FormDataVm[] = [
   {
     name: 'organismsID',
     control_type: 'dropdown',
     label: 'Organism',
     required: true,
     title: 'Select the organism',
-  },
-  {
-    name: 'results',
-    control_type: 'dropdown',
-    label: 'Results',
-    required: true,
-    options: [{ value: 'Resistant' }, { value: 'Sensitive' }, { value: 'Indeterminate' }]
   },
   {
     name: 'gender',
@@ -104,7 +97,7 @@ const cultureForms: FormDataVm[] = [
   },
   {
     name: 'diagnoses',
-    control_type: 'textbox',
+    control_type: 'array',
     required: true,
     label: 'Diagnosis',
     children: [
@@ -124,7 +117,7 @@ const cultureForms: FormDataVm[] = [
   },
   {
     name: 'antibiotics',
-    control_type: 'textbox',
+    control_type: 'array',
     required: true,
     label: 'Antibiotics',
     children: [
@@ -134,6 +127,33 @@ const cultureForms: FormDataVm[] = [
         required: true,
         control_type: 'textbox',
         validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
+      }
+    ]
+  },
+  {
+    name: 'reports',
+    control_type: 'array',
+    required: true,
+    label: 'Reports',
+    children: [
+      {
+        name: 'organismsID',
+        label: 'Organism',
+        required: true,
+        control_type: 'dropdown'
+      },
+      {
+        name: 'antibioticsID',
+        label: 'Antibiotics',
+        required: true,
+        control_type: 'dropdown'
+      },
+      {
+        name: 'results',
+        label: 'Results',
+        required: true,
+        control_type: 'dropdown',
+        options: [{ value: 'Resistant' }, { value: 'Sensitive' }, { value: 'Indeterminate' }]
       }
     ]
   }

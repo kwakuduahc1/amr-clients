@@ -16,7 +16,6 @@ export interface CultureResults {
     antibiotics: Antibiotics[];
     diagnoses: Diagnoses[];
     resultsID: number;
-    organismsID: number;
     hospitalsID: number;
     age: number;
     loS: number;
@@ -25,17 +24,26 @@ export interface CultureResults {
     outcome: string;
     patientType: string;
     gender: string;
-    results: 'Resistant' | "Sensitive" | "Indeterminate";
     concurrency: string;
+    reports: Reports[]
 }
 
 export interface Antibiotics {
+    antibioticsID: number;
     drugName: string;
     actualName: string | null;
     drugClass: string | null;
 }
 
 export interface Diagnoses {
+    diagnosisID: number;
     diagnosis: string;
     iCDCode: string | null;
+}
+
+export interface Reports {
+    reportsID: number;
+    organismsID: number;
+    antibioticsID: number;
+    results: 'Resistant' | "Sensitive" | "Indeterminate";
 }
