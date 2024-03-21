@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { FormProperties, FormDataVm, DropDownOptions } from '../../../../bs-controls/model/elements';
-import { Organisms, Hospitals, CultureResults } from '../../../model/dtos';
+import { Organisms, Hospitals, PatientDetails, Antibiotics, CultureAntibiotics } from '../../../model/dtos';
 import { OrganismsHttpService } from '../../../organisms/organisms-http-service';
 import { TableDisplayComponent } from '../../../../bs-controls/display/table-display/table-display.component';
 import { FormBuilderComponent } from '../../../../bs-controls/forms/form-builder/form-builder.component';
@@ -21,6 +21,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class AddResultsComponent {
   protected organisms = input.required<Organisms[]>();
+  protected antibiotics = input.required<CultureAntibiotics[]>();
   hosp = input.required<Hospitals>({
     alias: 'hospital'
   });
@@ -32,15 +33,24 @@ export class AddResultsComponent {
     let orgs = this.organisms().map(x => {
       return {
         key: x.organism,
-        value: x.organismsID
+        value: x.organismsID,
       }
     });
     this.form.find(x => x.name === 'reports')!
       .children!.filter(x => x.name === 'organismsID')
       .forEach(x => x.options = orgs);
+
+    this.form.find(x => x.name === 'reports')!
+      .children!.filter(x => x.name === 'antibioticsID')
+      .forEach(x => x.options = this.antibiotics().map(x => {
+        return {
+          key: x.antibiotic,
+          value: x.cultureAntibioticsID
+        }
+      }));
   }
 
-  save(res: { value: CultureResults, edit: boolean }) {
+  save(res: { value: PatientDetails, edit: boolean }) {
     // res.value.antibiotics = [];
     // res.value.diagnoses = [];
     // this.http.add(res.value).subscribe()

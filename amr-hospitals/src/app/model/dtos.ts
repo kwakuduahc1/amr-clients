@@ -1,9 +1,10 @@
 export interface Hospitals {
     hospitalsID: number;
+    hospitalName: string;
     longitude: number;
     latitude: number;
-    hospitalName: string;
     type: string;
+    patientDetails?: PatientDetails[];
 }
 
 export interface Organisms {
@@ -12,38 +13,49 @@ export interface Organisms {
     type: string;
 }
 
-export interface CultureResults {
-    antibiotics: Antibiotics[];
-    diagnoses: Diagnoses[];
-    resultsID: number;
+export interface CultureAntibiotics {
+    cultureAntibioticsID: number;
+    antibiotic: string;
+    groupName: string;
+    reports: Reports[];
+}
+
+export interface PatientDetails {
+    patientDetailsID: number;
     hospitalsID: number;
-    age: number;
-    loS: number;
-    dateAdded: string;
-    dateDone: string;
-    outcome: string;
-    patientType: string;
     gender: string;
-    concurrency: string;
-    reports: Reports[]
-}
-
-export interface Antibiotics {
-    antibioticsID: number;
-    drugName: string;
-    actualName: string | null;
-    drugClass: string | null;
-}
-
-export interface Diagnoses {
-    diagnosisID: number;
-    diagnosis: string;
-    iCDCode: string | null;
+    age: number;
+    patientType: string;
+    loS: number;
+    outcome: string;
+    diagnoses: Diagnoses[];
+    antibiotics: Antibiotics[];
+    reports: Reports[];
+    dateAdded: Date;
+    dateDone: Date;
+    concurrency?: number[];
 }
 
 export interface Reports {
     reportsID: number;
     organismsID: number;
+    patientDetailsID: number;
     antibioticsID: number;
-    results: 'Resistant' | "Sensitive" | "Indeterminate";
+    results: string;
+    patientDetails?: PatientDetails;
+    cultureAntibiotics?: CultureAntibiotics;
+    organisms?: Organisms;
+}
+
+export interface Antibiotics {
+    antibioticsID: number;
+    drugName: string;
+    actualName?: string;
+    drugClass?: string;
+}
+
+export interface Diagnoses {
+    diagnosesID: number;
+    diagnosis: string;
+    icdCode?: string;
 }

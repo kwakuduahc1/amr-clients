@@ -13,5 +13,9 @@ export const routes: Routes = [
     {
         path: 'hospitals',
         loadChildren: () => import('./hospitals/hospitals.module').then(x => x.HospitalsModule)
+    },
+    {
+        path: 'antibiotics',
+        loadChildren: () => import('./antibiotics/antibiotics.module').then(x => x.AntibioticsModule)
     }
 ];
