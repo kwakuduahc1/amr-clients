@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, input } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select'
-import { DropDowns, DropDownOptions } from '../../../model/elements';
+import { DropDowns } from '../../../model/elements';
 @Component({
   selector: 'app-dropdown-boxes',
   standalone: true,
@@ -18,6 +18,4 @@ import { DropDowns, DropDownOptions } from '../../../model/elements';
 export class DropdownBoxesComponent {
   control = input.required<FormControl>();
   ctrl = input.required<DropDowns>();
-
-  ngOnInit(): void { }
 }

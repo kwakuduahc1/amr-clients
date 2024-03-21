@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
-import { FormProperties, FormDataVm } from '../../../../bs-controls/model/elements';
+import { FormProperties, FormDataVm, DropDownOptions } from '../../../../bs-controls/model/elements';
 import { Organisms, Hospitals, CultureResults } from '../../../model/dtos';
-import { OrganismsService } from '../../../organisms/organisms-http-service';
+import { OrganismsHttpService } from '../../../organisms/organisms-http-service';
 import { TableDisplayComponent } from '../../../../bs-controls/display/table-display/table-display.component';
 import { FormBuilderComponent } from '../../../../bs-controls/forms/form-builder/form-builder.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-add-results',
@@ -23,25 +24,26 @@ export class AddResultsComponent {
   hosp = input.required<Hospitals>({
     alias: 'hospital'
   });
-
   form = detailsForm;
   props: FormProperties = { name: 'form', id: 'culture_form', class: '', legend: 'Culture results', btnText: 'Add', icon: 'add' }
   protected edit = signal<boolean>(false);
-  private http = inject(OrganismsService);
+  // private http = inject(OrganismsHttpService);
   ngOnInit(): void {
     let orgs = this.organisms().map(x => {
       return {
         key: x.organism,
         value: x.organismsID
       }
-    })
-    this.form[0].options = orgs;
+    });
+    this.form.find(x => x.name === 'reports')!
+      .children!.filter(x => x.name === 'organismsID')
+      .forEach(x => x.options = orgs);
   }
 
   save(res: { value: CultureResults, edit: boolean }) {
     // res.value.antibiotics = [];
     // res.value.diagnoses = [];
-    this.http.add(res.value).subscribe()
+    // this.http.add(res.value).subscribe()
   }
 }
 
@@ -60,7 +62,7 @@ const detailsForm: FormDataVm[] = [
     options: [{ value: 'Male' }, { value: 'Female' }],
     required: true
   },
-  /*{
+  {
     name: 'age',
     control_type: 'number',
     label: 'Age',
@@ -94,12 +96,13 @@ const detailsForm: FormDataVm[] = [
     required: true,
     label: 'Date done',
     validators: [{ property: 'maxTodayDate', check: '' }]
-  },*/
+  },
   {
     name: 'reports',
     control_type: 'array',
     required: true,
     label: 'C/S Results',
+    options: [],
     children: [
       {
         name: 'organismsID',
@@ -111,7 +114,7 @@ const detailsForm: FormDataVm[] = [
         name: 'antibioticsID',
         label: 'Antibiotics',
         required: true,
-        control_type: 'dropdown'
+        control_type: 'dropdown',
       },
       {
         name: 'results',

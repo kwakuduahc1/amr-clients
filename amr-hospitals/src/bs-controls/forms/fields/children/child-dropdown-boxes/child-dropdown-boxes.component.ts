@@ -17,5 +17,4 @@ import { ControlProps } from '../child-textbox-control/child-textbox-control.com
 })
 export class ChildDropdownBoxesComponent {
   cp = input.required<ControlProps>();
-  ngOnInit(): void { }
 }

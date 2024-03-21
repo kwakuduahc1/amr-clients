@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, RouterModule, Routes } from '@angular/router';
 import { ListHospitalsComponent } from './components/list-hospitals/list-hospitals.component';
 import { HospitalsHttpService } from './hospitals-http-service';
 import { ViewHospitalComponent } from './components/view-hospital/view-hospital.component';
-import { OrganismsService } from '../organisms/organisms-http-service';
+import { OrganismsHttpService } from '../organisms/organisms-http-service';
 import { AddResultsComponent } from './components/add-results/add-results.component';
 
 const routes: Routes = [
@@ -31,7 +31,7 @@ const routes: Routes = [
     path: ':id/add-results',
     component: AddResultsComponent,
     resolve: {
-      organisms: () => inject(OrganismsService).list(),
+      organisms: () => inject(OrganismsHttpService).list(),
       hospital: (route = inject(ActivatedRouteSnapshot)) => inject(HospitalsHttpService).find(Number(route.paramMap.get('id') as string))
     }
   }

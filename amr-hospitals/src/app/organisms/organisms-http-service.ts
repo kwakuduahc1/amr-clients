@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { CultureResults, Organisms } from '../model/dtos';
 
 @Injectable({ providedIn: 'root' })
-export class OrganismsService {
+export class OrganismsHttpService {
     private http = inject(HttpClient);
 
     list(): Observable<Organisms[]> {

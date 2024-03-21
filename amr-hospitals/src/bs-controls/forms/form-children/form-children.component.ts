@@ -7,6 +7,7 @@ import { ChildTextBoxControlComponent, ControlProps } from '../fields/children/c
 import { transformBsControl } from '../../bs-control-tranformer';
 import { ChildDropdownBoxesComponent } from '../fields/children/child-dropdown-boxes/child-dropdown-boxes.component';
 import { ChildCheckboxesComponent } from '../fields/children/child-checkboxes/child-checkboxes.component';
+import { MatButton } from '@angular/material/button';
 @Component({
   selector: 'app-form-children',
   standalone: true,
@@ -15,6 +16,7 @@ import { ChildCheckboxesComponent } from '../fields/children/child-checkboxes/ch
     ReactiveFormsModule,
     FormsModule,
     MatIcon,
+    MatButton,
     ChildTextBoxControlComponent,
     ChildDropdownBoxesComponent,
     ChildCheckboxesComponent
@@ -24,14 +26,13 @@ import { ChildCheckboxesComponent } from '../fields/children/child-checkboxes/ch
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormChildrenComponent {
-  fms = input.required<FormDataVm[]>(); // template for additional controls
+  fms = input.required<FormDataVm[]>();
   farray = input.required<FormArray>();
   arr: Controls[][] = [];
   carrys = computed(() => {
     return this.arr;
   });
   section = input.required<string>();
-  // props: FormProperties = { name: 'form', id: 'culture_form', class: '', legend: 'Culture results', btnText: 'Add', icon: 'add' }
 
   ngOnInit(): void {
     this.addCtrl();
