@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input'
-import { Controls, FormDataVm, TextBoxes } from '../../../../model/elements';
+import { CheckBoxes, Controls, FormDataVm, TextBoxes } from '../../../../model/elements';
 import { transformBsControl } from '../../../../bs-control-tranformer';
 
 @Component({
@@ -22,18 +22,12 @@ import { transformBsControl } from '../../../../bs-control-tranformer';
 export class ChildTextBoxControlComponent {
 
   cp = input.required<ControlProps>();
-  //ctrls = this.cp().controls.map(x => transformBsControl(x));
-  // control = this.cp().control
 
-  ngOnInit(): void {
-    console.log(this.cp())
-  }
+  box = computed(() => this.cp().control as CheckBoxes);
 }
 
 
 export interface ControlProps {
-  controls: TextBoxes;
-  name: string;
-  form: FormGroup;
+  control: Controls;
   input: FormControl
 }

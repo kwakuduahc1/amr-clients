@@ -99,13 +99,13 @@ const detailsForm: FormDataVm[] = [
     name: 'reports',
     control_type: 'array',
     required: true,
-    label: 'Reports',
+    label: 'C/S Results',
     children: [
       {
         name: 'organismsID',
         label: 'Organism',
         required: true,
-        control_type: 'textbox'
+        control_type: 'dropdown',
       },
       {
         name: 'antibioticsID',
@@ -122,40 +122,40 @@ const detailsForm: FormDataVm[] = [
       }
     ]
   },
-  /* {
-     name: 'diagnoses',
-     control_type: 'array',
-     required: true,
-     label: 'Diagnosis',
-     children: [
-       {
-         name: 'diagnosis',
-         label: 'Diagnosis',
-         required: true,
-         control_type: 'textbox',
-         validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
-       },
-       {
-         name: 'isPrimary',
-         label: 'Primary',
-         control_type: 'checkbox'
-       }
-     ]
-   },
-   {
-     name: 'antibiotics',
-     control_type: 'array',
-     required: true,
-     label: 'Antibiotics',
-     children: [
-       {
-         name: 'drugName',
-         label: 'Drug',
-         required: true,
-         control_type: 'textbox',
-         validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
-       }
-     ]
-   }*/
+  {
+    name: 'diagnoses',
+    control_type: 'array',
+    required: true,
+    label: 'Diagnosis',
+    children: [
+      {
+        name: 'diagnosis',
+        label: 'Diagnosis',
+        required: true,
+        control_type: 'textbox',
+        validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
+      },
+      {
+        name: 'isPrimary',
+        label: 'Primary',
+        control_type: 'checkbox'
+      }
+    ]
+  },
+  {
+    name: 'antibiotics',
+    control_type: 'array',
+    required: true,
+    label: 'Antibiotics',
+    children: [
+      {
+        name: 'drugName',
+        label: 'Drug',
+        required: true,
+        control_type: 'textbox',
+        validators: [{ property: 'minLen', check: 3 }, { property: 'maxLen', check: 75 }]
+      }
+    ]
+  }
 ]
 

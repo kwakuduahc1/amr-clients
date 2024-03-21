@@ -37,9 +37,11 @@
                 }
                 }
                 @if (ctrl.children) {
-                <fieldset>{{ctrl.name}}</fieldset>
-                <app-form-children [form]="form" [fms]="getFdm(ctrl.name)" [farray]="getFmArray(ctrl.name)"
-                    [array_name]="ctrl.name"></app-form-children>
+                <fieldset>
+                    <legend>{{ctrl.label}}</legend>
+                    <app-form-children [fms]="getFdm(ctrl.name)" [farray]="getFmArray(ctrl.name)"
+                        [section]="''"></app-form-children>
+                </fieldset>
                 }
                 }
             </div>

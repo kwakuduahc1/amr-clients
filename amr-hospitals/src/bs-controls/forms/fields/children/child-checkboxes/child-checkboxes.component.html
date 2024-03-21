@@ -1,0 +1,10 @@
+@if (cp(); as c) {
+<mat-checkbox matInput class="" [formControl]="c.input" [checked]="box().checked" [color]="box().color">
+    {{box().label}}
+</mat-checkbox>
+@if(c.input.errors){
+<mat-error>
+    <span *ngIf="c.input.touched && c.input.errors['required']">*</span>
+</mat-error>
+}
+}

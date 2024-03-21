@@ -1,15 +1,15 @@
 @if (cp(); as c) {
 <mat-form-field>
-    <mat-label class="sr-only">{{c.type.label}}</mat-label>
-    <mat-select data-test="code" title="{{c.type.title}}" formControlName="{{c.name}}">
-        @for (o of c.type.options; track $index) {
+    <mat-label class="sr-only">{{c.control.label}}</mat-label>
+    <mat-select data-test="code" title="{{c.control.title}}" [formControl]="c.input">
+        @for (o of c.control.options; track $index) {
         <mat-option [value]="o.value">{{o.key ?? o.value}}</mat-option>
         }
     </mat-select>
-    @if(c.control.touched && c.control.errors){
+    @if(c.input.touched && c.input.errors){
     <mat-error>
-        <span *ngIf="c.control.errors?.['required']">Required</span>
-        <span *ngIf="c.control.errors?.['touched'] && c.control.errors?.['inList']">Invalid selection</span>
+        <span *ngIf="c.input.errors?.['required']">Required</span>
+        <span *ngIf="c.input.errors?.['touched'] && c.input.errors?.['inList']">Invalid selection</span>
     </mat-error>
     }
 </mat-form-field>
