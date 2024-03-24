@@ -4,6 +4,7 @@ using AMR_Study.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AMR_Study.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240321113412_FolderID")]
+    partial class FolderID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,6 +168,7 @@ namespace AMR_Study.Migrations
                         .HasColumnType("nvarchar(75)");
 
                     b.Property<string>("ICDCode")
+                        .IsRequired()
                         .HasMaxLength(75)
                         .HasColumnType("nvarchar(75)");
 
@@ -394,6 +398,7 @@ namespace AMR_Study.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportsID"));
 
                     b.Property<int>("AntibioticsID")
+                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.Property<int>("OrganismsID")

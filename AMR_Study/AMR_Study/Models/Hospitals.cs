@@ -63,6 +63,10 @@ namespace AMR_Study.Models
         public int PatientDetailsID { get; set; }
 
         [Required]
+        [StringLength(30, MinimumLength =3)]
+        public required string FolderID { get; set; }
+
+        [Required]
         public short HospitalsID { get; set; }
 
         [Required]
@@ -115,7 +119,7 @@ namespace AMR_Study.Models
         [Required]
         public int PatientDetailsID { get; set; }
 
-        [Required, StringLength(50, MinimumLength = 5)]
+        [Required]
         [ForeignKey(nameof(CultureAntibiotics))]
         public int AntibioticsID { get; set; }
 
@@ -156,7 +160,6 @@ namespace AMR_Study.Models
         [StringLength(75, MinimumLength = 3)]
         public required string Diagnosis { get; set; }
 
-        [Required]
         [StringLength(75, MinimumLength = 3)]
         public string? ICDCode { get; set; }
     }

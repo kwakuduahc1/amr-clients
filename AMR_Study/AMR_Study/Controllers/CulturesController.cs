@@ -1,4 +1,5 @@
 ﻿using AMR_Study.Context;
+using AMR_Study.Mappers;
 using AMR_Study.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,11 @@ namespace AMR_Study.Controllers
         public async Task<IEnumerable> List(int id) => await db.PatientDetails.Where(x => x.HospitalsID == id).ToListAsync();
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] PatientDetails culture)
+        public async Task<IActionResult> Create([FromBody] PatientDetailsAddVm culture)
         {
-                culture.DateAdded = DateTime.UtcNow;
-                db.PatientDetails.Add(culture);
+            culture.DateAdded = DateTime.UtcNow;
+            var map = new ResultsMapper().Results(culture);
+            db.PatientDetails.Add(map);
             await db.SaveChangesAsync();
             return Ok(culture);
         }

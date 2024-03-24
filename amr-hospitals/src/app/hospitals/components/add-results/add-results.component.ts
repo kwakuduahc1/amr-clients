@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
-import { FormProperties, FormDataVm, DropDownOptions } from '../../../../bs-controls/model/elements';
-import { Organisms, Hospitals, PatientDetails, Antibiotics, CultureAntibiotics } from '../../../model/dtos';
-import { OrganismsHttpService } from '../../../organisms/organisms-http-service';
+import { FormProperties, FormDataVm } from '../../../../bs-controls/model/elements';
+import { Organisms, Hospitals, PatientDetails, CultureAntibiotics } from '../../../model/dtos';
 import { TableDisplayComponent } from '../../../../bs-controls/display/table-display/table-display.component';
 import { FormBuilderComponent } from '../../../../bs-controls/forms/form-builder/form-builder.component';
-import { environment } from '../../../../environments/environment';
+import { ResultsHttpService } from './reports-http-service';
 
 @Component({
   selector: 'app-add-results',
@@ -28,7 +27,7 @@ export class AddResultsComponent {
   form = detailsForm;
   props: FormProperties = { name: 'form', id: 'culture_form', class: '', legend: 'Culture results', btnText: 'Add', icon: 'add' }
   protected edit = signal<boolean>(false);
-  // private http = inject(OrganismsHttpService);
+  private http = inject(ResultsHttpService);
   ngOnInit(): void {
     let orgs = this.organisms().map(x => {
       return {
@@ -51,9 +50,8 @@ export class AddResultsComponent {
   }
 
   save(res: { value: PatientDetails, edit: boolean }) {
-    // res.value.antibiotics = [];
-    // res.value.diagnoses = [];
-    // this.http.add(res.value).subscribe()
+    res.value.hospitalsID = this.hosp().hospitalsID;
+    this.http.add(res.value).subscribe()
   }
 }
 

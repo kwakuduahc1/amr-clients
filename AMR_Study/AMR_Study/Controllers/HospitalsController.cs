@@ -77,6 +77,7 @@ namespace AMR_Study.Controllers
             var cultureResults = new PatientDetails
             {
                 HospitalsID = (short)random.Next(1, 3),
+                FolderID = "1234567",
                 Gender = possibleGenders[random.Next(possibleGenders.Length)],
                 Age = (byte)random.Next(1, 101),
                 PatientType = possiblePatientTypes[random.Next(possiblePatientTypes.Length)],

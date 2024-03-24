@@ -16,10 +16,6 @@ export class OrganismsHttpService {
         return this.http.get<Organisms>(environment.AppUrl + `Organisms/${id}`)
     }
 
-    // add(hosp: Organisms): Observable<Organisms> {
-    //     return this.http.post<Organisms>(environment.AppUrl + 'Cultures', hosp)
-    // }
-
     edit(hosp: Organisms): Observable<Organisms> {
         return this.http.put<Organisms>(environment.AppUrl + 'Organisms', hosp)
     }
