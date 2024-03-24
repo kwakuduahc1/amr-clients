@@ -1,0 +1,7 @@
+{
+  "name": "amr-self-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
