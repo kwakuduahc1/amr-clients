@@ -19,7 +19,6 @@ import { Router } from '@angular/router';
     TableDisplayComponent,
     CommonModule
   ],
-  // providers: [Router],
   templateUrl: './list-hospitals.component.html',
   styleUrl: './list-hospitals.component.scss'
 })
@@ -60,7 +59,6 @@ export class ListHospitalsComponent {
   }
 
   view(ev: Hospitals) {
-    console.log(ev)
     this.router.navigate(['/hospitals', ev.hospitalsID])
   }
 }

@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 export class ResultsHttpService {
     private http = inject(HttpClient);
 
-
     add(hosp: PatientDetails): Observable<PatientDetails> {
+
         return this.http.post<PatientDetails>(environment.AppUrl + 'Cultures', hosp)
     }
 }

@@ -91,10 +91,6 @@ export class FormBuilderComponent {
     return this.form.get(id) as FormArray;
   }
 
-  logForm() {
-    console.log(this.form)
-  }
-
   f_submit(vals: any, edit: boolean) {
     // this.edit.subscribe(x => {
     this.submit.emit({ value: vals, edit });

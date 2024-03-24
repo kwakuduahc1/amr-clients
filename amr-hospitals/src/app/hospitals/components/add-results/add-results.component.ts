@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, signal, viewChild } from '@angular/core';
 import { FormProperties, FormDataVm } from '../../../../bs-controls/model/elements';
 import { Organisms, Hospitals, PatientDetails, CultureAntibiotics } from '../../../model/dtos';
 import { TableDisplayComponent } from '../../../../bs-controls/display/table-display/table-display.component';
 import { FormBuilderComponent } from '../../../../bs-controls/forms/form-builder/form-builder.component';
 import { ResultsHttpService } from './reports-http-service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-add-results',
@@ -21,13 +23,14 @@ import { ResultsHttpService } from './reports-http-service';
 export class AddResultsComponent {
   protected organisms = input.required<Organisms[]>();
   protected antibiotics = input.required<CultureAntibiotics[]>();
-  hosp = input.required<Hospitals>({
-    alias: 'hospital'
-  });
+  hosp = input.required<Hospitals>({ alias: 'hospital' });
   form = detailsForm;
   props: FormProperties = { name: 'form', id: 'culture_form', class: '', legend: 'Culture results', btnText: 'Add', icon: 'add' }
   protected edit = signal<boolean>(false);
   private http = inject(ResultsHttpService);
+  vwform = viewChild.required(FormBuilderComponent);
+  snack = inject(MatSnackBar);
+
   ngOnInit(): void {
     let orgs = this.organisms().map(x => {
       return {
@@ -51,7 +54,13 @@ export class AddResultsComponent {
 
   save(res: { value: PatientDetails, edit: boolean }) {
     res.value.hospitalsID = this.hosp().hospitalsID;
-    this.http.add(res.value).subscribe()
+    this.http.add(res.value)
+      .pipe(
+        map(() => this.snack.open('The results were saved successfully').afterDismissed())
+      )
+      .subscribe(() => {
+        this.vwform().form.reset();
+      })
   }
 }
 
