@@ -52,6 +52,8 @@ namespace AMR_Study.Controllers
             if (!result.Succeeded)
                 return BadRequest(new { Message = result.Errors.First().Description });
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, user.FullName));
+            if(reg.Role != null)
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, reg.Role));
             await db.SaveChangesAsync();
             return Created("", new { user.UserName, user.PhoneNumber, user.Email, user.Id });
         }

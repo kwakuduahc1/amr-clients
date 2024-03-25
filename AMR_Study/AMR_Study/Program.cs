@@ -31,7 +31,7 @@ namespace AMR_Study
                 x.Password.RequireDigit = true;
                 x.Password.RequireUppercase = true;
                 x.Password.RequireLowercase = true;
-                x.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                x.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(28);
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddSingleton<IAppFeatures, AppFeatures>();
@@ -71,7 +71,7 @@ namespace AMR_Study
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("bStudioApps",
-                    x => x.WithOrigins("http://localhost:4200")
+                    x => x.WithOrigins(["http://localhost:4200", "http://localhost:8100"])
                     .WithHeaders("Content-Type", "Accept", "Origin", "Authorization", "X-XSRF-TOKEN", "XSRF-TOKEN", "enctype", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
                     .WithMethods("GET", "POST", "OPTIONS", "PUT", "DELETE")
                         .AllowCredentials());

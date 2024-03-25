@@ -8,12 +8,7 @@ namespace AMR_Study.Models.AuthVm
     {
         [Required]
         [StringLength(20)]
-        public required string UserName { get; set; }
-
-        [Required]
-        [AllowedValues(["Mr.", "Mrs.", "Dr.", "Ms.", "Prof."])]
-        [StringLength(10, MinimumLength = 3)]
-        public required string Title { get; set; }
+        public required string UserName {  get; set; }
 
         [Required]
         [StringLength(15, MinimumLength = 6)]
@@ -26,6 +21,9 @@ namespace AMR_Study.Models.AuthVm
         [Required]
         [StringLength(50, MinimumLength = 5)]
         public required string FullName { get; set; }
+
+        [StringLength(30, MinimumLength =3)]
+        public string? Role {  get; set; }
 
         [Required]
         public required string[] PhoneNumber { get; set; }

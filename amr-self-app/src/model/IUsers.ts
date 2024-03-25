@@ -11,12 +11,8 @@ export interface IUsers {
 }
 
 export interface RegisterVm {
-  team?: string;
-  title: string;
   userName: string;
   password: string;
-  rank: string;
-  teamsID: number;
   confirmPassword: string;
   fullName: string;
   phoneNumber: string[];
@@ -45,7 +41,7 @@ export interface IUserRoles {
 
 export interface LoginVm {
   userName: string;
-  password: string | null;
+  password: string;
 }
 
 export interface ApprovalVm {

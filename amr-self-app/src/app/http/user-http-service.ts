@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ApprovalVm, IRoles, IUserRoles, IUsers, RegisterVm, URoles } from '../model/IUsers';
 import { environment } from '../../environments/environment';
+import { IRoles, IUsers, URoles, IUserRoles, ApprovalVm } from 'src/model/IUsers';
 
 
 @Injectable({ providedIn: 'root' })

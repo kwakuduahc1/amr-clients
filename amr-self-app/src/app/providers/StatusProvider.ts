@@ -3,40 +3,48 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginHttpService } from '../http/login-http-service';
 import { TokenProvider } from './TokenProvider';
-import { from, switchMap, tap } from 'rxjs';
+import { combineLatest, combineLatestAll, from, switchMap, tap } from 'rxjs';
 import { StorageMap } from '@ngx-pwa/local-storage';
-import { IUsers } from 'src/model/IUsers';
-import { AlertController } from '@ionic/angular';
+import { IUsers, LoginVm } from 'src/model/IUsers';
+import { ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
+import { LoginComponent } from '../auth/login/login.component';
 
 @Injectable({ providedIn: 'root' })
 export class StatusProvider {
   roles: string[] = [];
   user: IUsers | undefined;
-  snack = inject(AlertController);
-  jwt = inject(JwtHelperService);
-  http = inject(LoginHttpService);
-  tp = inject(TokenProvider);
+  private modal = inject(ModalController);
+  private snack = inject(ToastController)
+  private jwt = inject(JwtHelperService);
+  private http = inject(LoginHttpService);
+  private tp = inject(TokenProvider);
   private store = inject(StorageMap);
-  token: string | undefined = ''
-  router = inject(Router);
-  projects!: string[];
+  private token: string | undefined = ''
+  private router = inject(Router);
 
+  duration: number = 500;
   constructor() {
+
     this.tp.bearer
       .subscribe(x => {
         if (!this.jwt.isTokenExpired(x)) {
           this.setCreds(this.jwt.decodeToken(x))
         }
         else {
-          from(this.snack.create({
-            header: 'Login status',
+          combineLatest([from(this.snack.create({
             message: 'Sign in required',
-            buttons: ['Ok'],
-          }))
-            .subscribe()
+            buttons: ['Dismiss'],
+            duration: this.duration
+          })), from(this.modal.create({
+            component: LoginComponent,
+            canDismiss: true,
+            animated: true,
+            backdropDismiss: false
+          }))])
+            .subscribe(x => x.forEach(e => e.present()));
         }
       })
-
   }
 
   isLoggedIn(): boolean {
@@ -47,19 +55,27 @@ export class StatusProvider {
     this.token = undefined;
     this.store.clear().subscribe();
     this.user = undefined;
-    if (initiated)
-      this.snack.create({
-        header: 'Signout',
+    if (initiated) {
+      combineLatest([from(this.snack.create({
         message: 'You have successfully signed out',
-        buttons: ['Dismiss']
-      });
+        buttons: ['Dismiss'],
+        duration: this.duration
+      })), from(this.modal.create({
+        component: LoginComponent,
+        canDismiss: true,
+        animated: true,
+        backdropDismiss: true
+      }))])
+        .pipe(tap(x => console.log(x)))
+        .subscribe(x => x.forEach(e => e.present()));
+    }
     else
-      this.snack.create({
-        header: 'Signin',
-        message: 'Your previous session has expired',
-        buttons: ['Dismiss']
-      });
-    this.router.navigate(['/auth/login']);
+      from(this.modal.create({
+        component: LoginComponent,
+        canDismiss: true,
+        animated: true,
+        backdropDismiss: true
+      })).subscribe(x => x.present());
   }
 
   isAdmin(): boolean {
@@ -98,21 +114,22 @@ export class StatusProvider {
     else { return false; }
   }
 
-  login(login: IUsers) {
-    this.snack.create({
+  login(login: LoginVm) {
+    return from(this.snack.create({
       header: 'Authentication',
       message: "Signing in",
-      buttons: ['Dismiss'],
-    });
-    return this.http.login(login).pipe(
-      tap(res => this.setCreds(this.jwt.decodeToken(res.token))),
-      switchMap(x => this.tp.setToken(x.token)))
+      duration: 200,
+    }))
+      .pipe(
+        switchMap(() => this.http.login(login).pipe(
+          tap(res => console.log(res)),
+          tap(res => this.setCreds(this.jwt.decodeToken(res.token))),
+          switchMap(x => this.tp.setToken(x.token)))))
   }
 
   setCreds(tkn: { [x: string]: any } | null) {
     if (tkn) {
       this.roles = tkn['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-      this.projects = tkn['Project'];
       this.user = {
         password: '',
         title: tkn['title'],
