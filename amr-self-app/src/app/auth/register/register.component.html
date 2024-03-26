@@ -12,12 +12,9 @@
   </ion-header>
 
   <ion-list>
-    <form id="form" name="form" [formGroup]="form" (submit)="register(form.getRawValue())">
+    <form id="reg_form" name="reg_form" [formGroup]="form" (submit)="register(form.getRawValue())">
       <fieldset>
         <legend>User details</legend>
-        <ion-item>
-          <ion-input formControlName="userName" label="User name" placeholder=""></ion-input>
-        </ion-item>
         <ion-item>
           <ion-input type="password" formControlName="password" label="Password" placeholder=""></ion-input>
         </ion-item>
@@ -29,6 +26,16 @@
           <ion-input type="text" formControlName="fullName" label="Full Name" placeholder=""></ion-input>
         </ion-item>
         <ion-item>
+          <ion-input type="number" formControlName="age" label="Age" placeholder=""></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-select formControlName="gender" label="Sex" placeholder="Select">
+            <ion-select-option value="Male">Male</ion-select-option>
+            <ion-select-option value="Female">Female</ion-select-option>
+            <ion-select-option value="Prefer not to say">Prefer not to say</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
           <ion-input type="email" formControlName="email" label="Email" placeholder=""></ion-input>
         </ion-item>
         <ion-list formArrayName="phoneNumber">
@@ -38,6 +45,13 @@
           </ion-item>
           }
         </ion-list>
+        @if (mapOpts|async; as o) {
+        <div class="map-container">
+          <google-map class="map" (headingChanged)="head($event)" (mapClick)="moveMap($event)" height="250px"
+            width="100%" [options]="o">
+          </google-map>
+        </div>
+        }
         <ion-item>
           <ion-button [disabled]="form.invalid || form.untouched" type="submit" color="success">
             <ion-icon name="log-in-sharp"></ion-icon>

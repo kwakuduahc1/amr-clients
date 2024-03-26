@@ -18,6 +18,22 @@ export interface RegisterVm {
   phoneNumber: string[];
 }
 
+export interface RegisterParticipantVm {
+  userName: string;
+  password: string;
+  confirmPassword: string;
+  fullName: string;
+  role: string;
+  phoneNumber: string[];
+  participantName: string;
+  locality: string;
+  age: number;
+  gender: string;
+  longitude: number;
+  latitude: number;
+}
+
+
 export interface ILogin extends IUsers {
   role: string;
 }

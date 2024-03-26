@@ -1,3 +1,8 @@
 <ion-app>
+  @if (_user(); as u;) {
+  <ion-item>
+    <ion-label color="secondary">{{u.userName[0]}} ({{u.userName[1]}})</ion-label>
+  </ion-item>
+  }
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

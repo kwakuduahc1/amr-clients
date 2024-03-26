@@ -1,12 +1,22 @@
-import { Component } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { Component, computed, inject } from '@angular/core';
+import { IonApp, IonRouterOutlet, IonItem, IonLabel } from '@ionic/angular/standalone';
+import { StatusProvider } from './providers/StatusProvider';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [IonApp, IonRouterOutlet],
+  imports: [IonLabel, IonItem,
+    IonApp,
+    IonRouterOutlet,
+    CommonModule
+  ],
 })
 export class AppComponent {
-  constructor() {}
+  user = inject(StatusProvider);
+
+  _user = computed(() => this.user.user());
+
 }

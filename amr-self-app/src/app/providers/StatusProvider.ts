@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, model } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginHttpService } from '../http/login-http-service';
@@ -13,7 +13,7 @@ import { LoginComponent } from '../auth/login/login.component';
 @Injectable({ providedIn: 'root' })
 export class StatusProvider {
   roles: string[] = [];
-  user: IUsers | undefined;
+  user = model<IUsers>();
   private modal = inject(ModalController);
   private snack = inject(ToastController)
   private jwt = inject(JwtHelperService);
@@ -21,7 +21,6 @@ export class StatusProvider {
   private tp = inject(TokenProvider);
   private store = inject(StorageMap);
   private token: string | undefined = ''
-  private router = inject(Router);
 
   duration: number = 500;
   constructor() {
@@ -54,7 +53,7 @@ export class StatusProvider {
   logout(initiated: boolean = false) {
     this.token = undefined;
     this.store.clear().subscribe();
-    this.user = undefined;
+    this.user.update(() => undefined);
     if (initiated) {
       combineLatest([from(this.snack.create({
         message: 'You have successfully signed out',
@@ -66,7 +65,6 @@ export class StatusProvider {
         animated: true,
         backdropDismiss: true
       }))])
-        .pipe(tap(x => console.log(x)))
         .subscribe(x => x.forEach(e => e.present()));
     }
     else
@@ -78,42 +76,6 @@ export class StatusProvider {
       })).subscribe(x => x.present());
   }
 
-  isAdmin(): boolean {
-    if (Array.isArray(this.roles))
-      return this.roles.some(x => x === 'Principal' || x === 'Developer');
-    else { return false; }
-  }
-
-  canRequest(): boolean {
-    if (Array.isArray(this.roles))
-      return this.roles.some(x => x === 'Requester');
-    else { return false; }
-  }
-
-  canAccount(): boolean {
-    if (Array.isArray(this.roles))
-      return this.roles.some(x => x === 'Finance');
-    else { return false; }
-  }
-
-  canReview(): boolean {
-    if (Array.isArray(this.roles))
-      return this.roles.some(x => x === 'Store Officer');
-    else { return false; }
-  }
-
-  canApprove(): boolean {
-    if (Array.isArray(this.roles))
-      return this.roles.some(x => x === 'Project Lead');
-    else { return false; }
-  }
-
-  canAuthorize(): boolean {
-    if (Array.isArray(this.roles))
-      return this.roles.some(x => x === 'Administration' || x === "Director" || x === "Principal");
-    else { return false; }
-  }
-
   login(login: LoginVm) {
     return from(this.snack.create({
       header: 'Authentication',
@@ -122,7 +84,6 @@ export class StatusProvider {
     }))
       .pipe(
         switchMap(() => this.http.login(login).pipe(
-          tap(res => console.log(res)),
           tap(res => this.setCreds(this.jwt.decodeToken(res.token))),
           switchMap(x => this.tp.setToken(x.token)))))
   }
@@ -130,7 +91,7 @@ export class StatusProvider {
   setCreds(tkn: { [x: string]: any } | null) {
     if (tkn) {
       this.roles = tkn['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-      this.user = {
+      this.user.set({
         password: '',
         title: tkn['title'],
         id: tkn['UsersID'],
@@ -140,7 +101,7 @@ export class StatusProvider {
         fullName: tkn['FullName'],
         userName: tkn['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
         usersID: tkn['UsersID']
-      };
+      });
     }
   }
 }

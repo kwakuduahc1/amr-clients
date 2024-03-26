@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  AppUrl: 'https://localhost:44307/api/'
+  AppUrl: 'https://localhost:44307/api/',
+  MapKey: 'AIzaSyDvUwFFp_nBMfIRFUP-ztsMUAht0xI4Vbc'
 };
 
 /*

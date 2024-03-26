@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { LoginVm, RegisterVm, IUsers, IRoles } from 'src/model/IUsers';
+import { LoginVm, RegisterVm, IUsers, IRoles, RegisterParticipantVm } from 'src/model/IUsers';
 
 
 @Injectable({ providedIn: 'root' })
@@ -17,7 +17,7 @@ export class LoginHttpService {
     return this.http.post(`${environment.AppUrl}Auth/Signout`, {});
   }
 
-  register(usr: RegisterVm): Observable<IUsers> {
+  register(usr: RegisterParticipantVm): Observable<IUsers> {
     return this.http.post<IUsers>(`${environment.AppUrl}Auth/Register`, usr);
   }
 
