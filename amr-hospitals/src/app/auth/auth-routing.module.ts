@@ -5,6 +5,7 @@ import { UsersComponent } from './components/users/users.component';
 import { UserHttpService } from '../http/user-http-service';
 import { LoginGuard } from '../guards/LoginGuard';
 import { LoginComponent } from './components/login/login.component';
+import { HospitalsHttpService } from '../hospitals/hospitals-http-service';
 
 const routes: Routes = [
   {
@@ -22,7 +23,10 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
+    resolve: {
+      hosps: () => inject(HospitalsHttpService).list()
+    }
   }
 ];
 

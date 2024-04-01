@@ -27,8 +27,8 @@ export class ViewHospitalComponent {
   mapOpts: Signal<google.maps.MapOptions> = computed(() => {
     return {
       center: {
-        lng: this.hosp().latitude,
-        lat: this.hosp().longitude,
+        lng: this.hosp().longitude,
+        lat: this.hosp().latitude,
         format: 'png',
         scale: 2,
         marker: `size=tiny|color=black|label=${this.hosp().hospitalName}`

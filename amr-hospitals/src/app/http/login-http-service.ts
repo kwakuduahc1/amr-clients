@@ -18,7 +18,7 @@ export class LoginHttpService {
   }
 
   register(usr: RegisterVm): Observable<IUsers> {
-    return this.http.post<IUsers>(`${environment.AppUrl}Auth/Register`, usr);
+    return this.http.post<IUsers>(`${environment.AppUrl}Auth/AddDE`, usr);
   }
 
   delete(user: IUsers): Observable<IUsers> {

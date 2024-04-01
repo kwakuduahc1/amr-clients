@@ -38,6 +38,7 @@
     "@ngx-pwa/local-storage": "^17.0.0",
     "ionicons": "^7.2.1",
     "jeep-sqlite": "^2.6.2",
+    "luxon": "^3.4.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
@@ -55,6 +56,7 @@
     "@capacitor/cli": "5.7.4",
     "@ionic/angular-toolkit": "11.0.1",
     "@types/jasmine": "~5.1.0",
+    "@types/luxon": "^3.4.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^7.26.0",

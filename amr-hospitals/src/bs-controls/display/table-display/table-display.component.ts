@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, inject, input, output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput } from '@angular/material/input';
 import { MatSort } from '@angular/material/sort';
@@ -55,6 +55,7 @@ export class TableDisplayComponent<T> implements OnInit {
 
   ngOnInit() {
     this.columns = Object.keys(this.headers());
+    computed(() => console.log(this.data()))
   }
 
   protected cellData(r: any, c: string) {

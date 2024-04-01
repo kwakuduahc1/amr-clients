@@ -1,61 +1,40 @@
-export interface Hospitals {
-    hospitalsID: number;
-    hospitalName: string;
+export interface Participants {
+    participantID: number;
+    participantName: string;
+    locality: string;
+    userName?: string;
+    age: number;
+    gender: string;
     longitude: number;
     latitude: number;
-    type: string;
-    patientDetails?: PatientDetails[];
+    illnesses?: Illnesses[];
 }
 
-export interface Organisms {
-    organismsID: number;
-    organism: string;
-    type: string;
-}
-
-export interface CultureAntibiotics {
-    cultureAntibioticsID: number;
-    antibiotic: string;
-    groupName: string;
-    reports: Reports[];
-}
-
-export interface PatientDetails {
-    patientDetailsID: number;
-    hospitalsID: number;
-    gender: string;
-    age: number;
-    patientType: string;
-    loS: number;
-    outcome: string;
-    diagnoses: Diagnoses[];
-    antibiotics: Antibiotics[];
-    reports: Reports[];
+export interface Illnesses {
+    illnessesID: number;
+    userName?: string;
+    participantsID: number;
+    illnessDate: Date;
     dateAdded: Date;
-    dateDone: Date;
-    concurrency?: number[];
+    symptoms: Symptoms[];
+    patientDrugs: PatientDrugs[];
+    resolved: boolean;
+    participants?: Participants;
+    synced: boolean;
 }
 
-export interface Reports {
-    reportsID: number;
-    organismsID: number;
-    patientDetailsID: number;
-    antibioticsID: number;
-    results: string;
-    patientDetails?: PatientDetails;
-    cultureAntibiotics?: CultureAntibiotics;
-    organisms?: Organisms;
+export interface Symptoms {
+    symptom: string;
+    symptomDate: Date;
+    resolved: boolean;
+    dateResolved: Date;
+    duration: number;
 }
 
-export interface Antibiotics {
-    antibioticsID: number;
+export interface PatientDrugs {
     drugName: string;
+    isPrescribed: boolean;
     actualName?: string;
     drugClass?: string;
-}
-
-export interface Diagnoses {
-    diagnosesID: number;
-    diagnosis: string;
-    icdCode?: string;
+    imageUrl?: string;
 }

@@ -58,6 +58,7 @@ export interface Controls {
     depends?: Controls;
     children?: Controls[];
     isChild?: boolean;
+    simpleChildren?: boolean;
     control_type: 'textbox' | 'password' | 'autocomplete' | 'radio' | 'checkbox' | 'dropdown' | 'number' | 'search' | 'free' | 'date' | 'date-time' | 'array';
 }
 

@@ -23,7 +23,7 @@ export class ChildTextBoxControlComponent {
 
   cp = input.required<ControlProps>();
 
-  box = computed(() => this.cp().control as CheckBoxes);
+  box = computed(() => this.cp().control as TextBoxes);
 }
 
 

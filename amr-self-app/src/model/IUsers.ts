@@ -59,9 +59,3 @@ export interface LoginVm {
   userName: string;
   password: string;
 }
-
-export interface ApprovalVm {
-  iD: string;
-  userName: string;
-  teamsID: number;
-}

@@ -59,3 +59,14 @@ export interface Diagnoses {
     diagnosis: string;
     icdCode?: string;
 }
+
+export interface SensitivityResult {
+    organism: string;
+    antibiotic: string;
+    total: number;
+    sentivity: string;
+}
+
+export interface HospitalDiagnosisVm {
+    diagnosis: string;
+}

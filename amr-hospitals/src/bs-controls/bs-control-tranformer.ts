@@ -17,7 +17,18 @@ export function transformBsControl(field: FormDataVm) {
     type: field.type,
     validators: [],
   };
+
+  if (field?.validators && field?.validators?.length > 0) {
+    ctrl.validators = getValidationsFn(field.validators, field.options)
+  }
+  if (ctrl.required) {
+    ctrl.validators?.push(Validators.required)
+  }
+
   if (field.children) {
+    ctrl.control_type = 'array';
+    ctrl.simpleChildren = false;
+    ctrl.children = [];
     for (let i = 0; i < field.children.length; i++) {
       let cld_ctrl: Controls = {
         control_type: field.children[i].control_type,
@@ -38,11 +49,14 @@ export function transformBsControl(field: FormDataVm) {
       ctrl.children?.unshift(cld_ctrl)
     }
   }
-  if (field.simpleChildren) {
+  else if (field.simpleChildren) {
+    ctrl.control_type = 'array';
+    ctrl.children = [];
+    ctrl.simpleChildren = true;
     for (let i = 0; i < field.simpleChildren; i++) {
       let cld_ctrl: Controls = {
         control_type: field.control_type,
-        label: field.label,
+        label: `${field.label} ${i + 1}`,
         name: `${field.name}_${i}`,
         value: field.value,
         required: field.required,
@@ -56,16 +70,8 @@ export function transformBsControl(field: FormDataVm) {
         cld_ctrl.validators = getValidationsFn(field.validators as ValidationProperties[]);
       }
       cld_ctrl = getCtrlType(cld_ctrl);
-      if (!ctrl.children)
-        ctrl.children = [];
-      ctrl.children.unshift(cld_ctrl)
+      ctrl.children?.push(cld_ctrl)
     }
-  }
-  if (field?.validators && field?.validators?.length > 0) {
-    ctrl.validators = getValidationsFn(field.validators, field.options)
-  }
-  if (ctrl.required) {
-    ctrl.validators?.push(Validators.required)
   }
   return getCtrlType(ctrl);
 }
@@ -80,10 +86,8 @@ export function getCtrlType(ctrl: Controls) {
       return ctrl as DatesBoxes;
     case 'dropdown':
       return ctrl as DropDowns;
-    // c.options = ctrl.options
     default:
       return ctrl;
-
   }
 }
 

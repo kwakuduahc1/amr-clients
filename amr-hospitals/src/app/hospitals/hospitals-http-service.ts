@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Hospitals } from '../model/dtos';
+import { HospitalDiagnosisVm, Hospitals } from '../model/dtos';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -22,5 +22,9 @@ export class HospitalsHttpService {
 
     edit(hosp: Hospitals): Observable<Hospitals> {
         return this.http.put<Hospitals>(environment.AppUrl + 'Hospitals', hosp)
+    }
+
+    diagnoses(id: number): Observable<HospitalDiagnosisVm[]> {
+        return this.http.get<HospitalDiagnosisVm[]>(environment.AppUrl + `Hospitals/Diagnoses/${id}`)
     }
 }

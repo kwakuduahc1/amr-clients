@@ -2,7 +2,7 @@
 <div>
     <mat-form-field>
         <mat-label class="sr-only">{{c.control.label}}</mat-label>
-        <input matInput [type]="c.control.type??''" data-test="code" title="{{c.control.title}}"
+        <input matInput [type]="c.control.type??'textbox'" data-test="code" title="{{c.control.title}}"
             placeholder="{{c.control.placeholder}}" [formControl]="c.input">
         @if(c.control.list){
         <datalist>

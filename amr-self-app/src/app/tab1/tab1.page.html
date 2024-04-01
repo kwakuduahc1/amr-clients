@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Illness events
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,74 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Illness events</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-button color="primary">
+    <ion-icon name="add-circle-outline"></ion-icon>
+    Add event
+  </ion-button>
+  <ion-list>
+    <form id="reg_form" name="reg_form" [formGroup]="sympsForm" (submit)="addSymptom(sympsForm.getRawValue())">
+      <fieldset>
+        <legend>Signs and symptoms</legend>
+        <ion-item>
+          <ion-input type="text" formControlName="symptom" label="Symptom" placeholder=""></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime formControlName="symptomDate" id="datetime"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox formControlName="resolved">Resolved</ion-checkbox>
+        </ion-item>
+        @if (isResolved) {
+        <ion-item>
+          <ion-datetime-button datetime="resolvedDate"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime formControlName="dateResolved" id="resolvedDate"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        }
+        <!-- <ion-item>
+          <ion-select formControlName="gender" label="Sex" placeholder="Select">
+            <ion-select-option value="Male">Male</ion-select-option>
+            <ion-select-option value="Female">Female</ion-select-option>
+            <ion-select-option value="Prefer not to say">Prefer not to say</ion-select-option>
+          </ion-select>
+        </ion-item> -->
+      </fieldset>
+      <ion-item>
+        <ion-button [disabled]="sympsForm.invalid || sympsForm.pristine" type="submit" color="success">
+          <ion-icon name="add-sharp"></ion-icon>
+          Add</ion-button>
+      </ion-item>
+    </form>
+  </ion-list>
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>Date</ion-col>
+        <ion-col>Symptom</ion-col>
+        <ion-col>Resolved</ion-col>
+        <ion-col>Date resolved</ion-col>
+        <!-- Add other column headers as needed -->
+      </ion-row>
+      @for (i of symptoms; track $index) {
+      <ion-row>
+        <ion-col>{{ i.symptomDate |date }}</ion-col>
+        <ion-col>{{ i.symptom }}</ion-col>
+        <ion-col>
+          <ion-checkbox [checked]="i.resolved"></ion-checkbox>
+        </ion-col>
+        <ion-col>{{ i.dateResolved |date }}</ion-col> </ion-row>
+      }
+    </ion-grid>
+  </ion-item>
 </ion-content>

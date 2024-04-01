@@ -35,13 +35,13 @@
                 @case ('checkbox') {
                 <app-checkboxes [form]="form" [ctrl]="toCheck(ctrl)" />
                 }
-                }
-                @if (ctrl.children) {
+                @case ('array') {
                 <fieldset>
                     <legend>{{ctrl.label}}</legend>
                     <app-form-children [fms]="getFdm(ctrl.name)" [farray]="getFmArray(ctrl.name)"
                         [section]="''"></app-form-children>
                 </fieldset>
+                }
                 }
                 }
             </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { CheckBoxes, Controls, DropDowns, FormDataVm, FormProperties, PasswordBoxes } from '../../model/elements';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from "@angular/material/button";
@@ -53,14 +53,14 @@ export class FormBuilderComponent {
     { id: 'form', name: 'form', class: '', legend: 'Complete the form', btnText: 'Save', direction: false, icon: 'save' }
   )
 
-  @Output() submit = new EventEmitter<any>(true);
+  submit = output<any>();
 
   ngOnInit(): void {
     for (let i = 0; i < this.controls().length; i++) {
       this._controls.push(transformBsControl(this.controls()[i]));
-      if (this.controls()[i].children) {
-        this._controls[i].children = this.controls()[i].children?.map(c => transformBsControl(c));
-      }
+      // if (this._controls[i].children || this.controls()[i].children) {
+      //   this._controls[i].children = this.controls()[i].children?.map(c => transformBsControl(c));
+      // }
     }
 
     this._controls.forEach(o => {
@@ -84,7 +84,10 @@ export class FormBuilderComponent {
   }
 
   getFdm(id: string) {
-    return this.controls().find(x => x.name === id)!.children!;
+    // console.log(this.controls());
+    // let x = this.controls().find(x => x.name === id)!.children!;
+    // console.log(x);
+    return this._controls.find(x => x.name === id)!!;
   }
 
   getFmArray(id: string) {

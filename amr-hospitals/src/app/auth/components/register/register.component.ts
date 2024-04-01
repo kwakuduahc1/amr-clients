@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, Input, inject, input, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs';
@@ -12,6 +12,7 @@ import { FormDataVm, FormProperties } from '../../../../bs-controls/model/elemen
 import { FormBuilderComponent } from '../../../../bs-controls/forms/form-builder/form-builder.component';
 import { ConfirmationComponent } from '../../../../bs-controls/buttons/confirmation/confirmation.component';
 import { CommonModule } from '@angular/common';
+import { Hospitals } from '../../../model/dtos';
 
 @Component({
   selector: 'app-register',
@@ -28,25 +29,37 @@ export class RegisterComponent {
   conf = inject(MatDialog);
   act = inject(ActivityProvider).act();
   router = inject(Router);
+  @Input() hosps!: Hospitals[];
 
   http = inject(LoginHttpService);
   status = inject(StatusProvider);
   snack = inject(MatSnackBar);
 
   props: FormProperties = { name: 'form', id: 'form', class: '', legend: 'User information', btnText: 'Register', icon: 'user_add' }
-  form = registrationForm;
-
+  form: FormDataVm[] = registrationForm
   edit = signal(false);
 
+  ngOnInit() {
+    this.form[5].options = this.hosps?.map(x => {
+      return {
+        key: x.hospitalName,
+        value: x.hospitalsID
+      }
+    });
+  }
+
   register(res: { value: RegisterVm, edit: boolean }) {
+    console.log(res.value);
+    return;
+    let pn: string[] = [];
+    pn.push(res.value.phoneNumber as unknown as string);
     this.conf.open(ConfirmationComponent, {
       data: `Do you want to create this account`,
       width: '350px'
     }).afterClosed().pipe(
       filter(p => p),
       map(x => {
-        res.value.teamsID = 1;
-        return res.value
+        return { ...res.value, phoneNumber: pn }
       }),
       switchMap(x => this.http.register(x))
     )
@@ -115,6 +128,7 @@ const registrationForm: FormDataVm[] = [
     label: 'Hospital',
     title: 'Select hospital',
     required: true,
+    options: []
   },
   {
     name: 'phoneNumber',
@@ -123,6 +137,8 @@ const registrationForm: FormDataVm[] = [
     type: 'tel',
     simpleChildren: 2,
     required: true,
+    title: 'Phone Number',
+    value: '',
     validators: [{ property: 'minLen', check: 10 }, { property: 'maxLen', check: 10 }]
   }
 ]

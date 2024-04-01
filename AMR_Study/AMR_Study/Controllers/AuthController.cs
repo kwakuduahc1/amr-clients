@@ -61,6 +61,7 @@ namespace AMR_Study.Controllers
                 await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Locality, reg.Locality));
             await _userManager.AddClaimAsync(user, new Claim("FullName", reg.FullName));
             await _userManager.AddClaimAsync(user, new Claim("UsersID", user.Id));
+            //await _userManager.AddClaimAsync(user, new Claim())
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, reg.UserName));
             db.Participants.Add(reg.ToParticipants());
             await db.SaveChangesAsync();
