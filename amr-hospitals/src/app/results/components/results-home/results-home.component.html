@@ -1,18 +1,44 @@
 <h1 class="h1 text-center">Manage hospitals</h1>
 <app-form-builder [controls]="form" [props]="props" (submit)="search($event)" [status]="false" />
 
-<mat-form-field appearance="outline">
-    <input matInput [formControl]="antCtrl" placeholder="Filter antibiotic">
-</mat-form-field>
-@if (data$|async; as res) {
+<div class="inputs">
+    <mat-form-field appearance="outline">
+        <input matInput [formControl]="antCtrl" placeholder="Filter antibiotic">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <input matInput [formControl]="antCtrl" placeholder="Filter organism">
+    </mat-form-field>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>Antibiotic</th>
+            <th>Oranism</th>
+            <th>Samples</th>
+            <th>Sensitivity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (d of results(); track $index) {
+        <tr>
+            <td>{{d.antibiotic}}</td>
+            <td>{{d.organism}}</td>
+            <td>{{d.total}}</td>
+            <td>{{d.sensitivity}}</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<!-- @if (data$|async; as res) {
 <table mat-table [dataSource]="res" class="mat-elevation-z8">
     <!-- Column 1-->
-    <!-- <ng-container matColumnDef="organism" sticky>
+<!-- <ng-container matColumnDef="organism" sticky>
         <th mat-header-cell *matHeaderCellDef> Organism </th>
         <td mat-cell *matCellDef="let r"> {{r.organism}} </td>
     </ng-container> -->
-    <!-- Column 2-->
-    <ng-container matColumnDef="antibiotic">
+<!-- Column 2-->
+<!-- <ng-container matColumnDef="antibiotic">
         <th mat-header-cell *matHeaderCellDef> Antibiotic </th>
         <td mat-cell *matCellDef="let r"> {{r.antibiotic}} </td>
     </ng-container>
@@ -29,4 +55,4 @@
     <tr mat-header-row *matHeaderRowDef="cols"></tr>
     <tr mat-row *matRowDef="let row; columns: cols;"></tr>
 </table>
-}
+} -->

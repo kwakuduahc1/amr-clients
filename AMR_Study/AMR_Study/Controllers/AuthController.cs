@@ -68,6 +68,37 @@ namespace AMR_Study.Controllers
             return Created("", new { user.UserName, user.PhoneNumber, user.Email, user.Id });
         }
 
+        [HttpPost("AddDE")]
+        //[Authorize(Roles = "Power")]
+        //[Authorize]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddDE([FromBody] RegisterVm reg)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new { Error = "Invalid data was submitted", Message = ModelState.Values.First(x => x.Errors.Count > 0).Errors.Select(t => t.ErrorMessage).First() });
+            if (reg.Password != reg.ConfirmPassword)
+                return BadRequest(new { Error = "The confirmation password must match" });
+            ApplicationUsers user = new()
+            {
+                ConfirmPassword = reg.ConfirmPassword,
+                FullName = reg.FullName,
+                Password = reg.Password,
+                PhoneNumber = reg.PhoneNumber,
+                UserName = reg.UserName
+            };
+            var result = await _userManager.CreateAsync(user, user.Password);
+            if (!result.Succeeded)
+                return BadRequest(new { Message = result.Errors.First().Description });
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Data Entry"));
+            foreach (var x in reg.PhoneNumber)
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.MobilePhone, x));
+            await _userManager.AddClaimAsync(user, new Claim("FullName", reg.FullName));
+            await _userManager.AddClaimAsync(user, new Claim("UsersID", user.Id));
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, reg.UserName));
+            await db.SaveChangesAsync();
+            return Created("", new { user.UserName, user.PhoneNumber, user.Email, user.Id });
+        }
+
         //[HttpPost("Approve")]
         ////[Authorize(Roles = "Power")]
         ////[Authorize]

@@ -1,3 +1,16 @@
 :host {
   display: block;
 }
+
+table {
+  display: table;
+}
+
+.inputs {
+  border: 2px solid red;
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+  max-width: fit-content;
+  align-content: flex-end;
+}

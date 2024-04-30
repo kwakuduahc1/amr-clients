@@ -64,7 +64,7 @@ export interface SensitivityResult {
     organism: string;
     antibiotic: string;
     total: number;
-    sentivity: string;
+    sensitivity: string;
 }
 
 export interface HospitalDiagnosisVm {

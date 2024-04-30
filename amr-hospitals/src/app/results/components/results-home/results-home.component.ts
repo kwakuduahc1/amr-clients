@@ -39,18 +39,28 @@ export class ResultsHomeComponent {
   antCtrl = new FormControl('');
   results = model<SensitivityResult[]>([]);
 
-  data$ = this.antCtrl.valueChanges
-    .pipe(
-      startWith(''),
-      map(x => (x as string).toLowerCase()),
-      switchMap(x => this.results()
-        // .filter(f =>
-        //   f.organism.toLowerCase().includes(x) ||
-        //   f.antibiotic.toLowerCase().includes(x))
-      ),
-      tap(x => console.log(x)),
-      map(x => new MatTableDataSource<SensitivityResult>())
-    );
+  // data = this.antCtrl.valueChanges
+  //   .pipe(
+  //     startWith(''),
+  //     map(x => (x as string).toLowerCase()),
+  //     switchMap(x => this.results()
+  //       .pipe(
+
+  //     )
+  //     )
+  //   )
+  // data$ = this.antCtrl.valueChanges
+  //   .pipe(
+  //     startWith(''),
+  //     map(x => (x as string).toLowerCase()),
+  //     switchMap(x => this.results()
+  //       // .filter(f =>
+  //       //   f.organism.toLowerCase().includes(x) ||
+  //       //   f.antibiotic.toLowerCase().includes(x))
+  //     ),
+  //     tap(x => console.log(x)),
+  //     map(x => new MatTableDataSource<SensitivityResult>())
+  //   );
 
   constructor() {
     this.hosp_http.diagnoses(1)
@@ -69,12 +79,12 @@ export class ResultsHomeComponent {
     this.http.sensitivity(1, res.value.diagnosis, res.value.score / 100)
       .pipe(
         map(x => {
-          x.map(d => d.sentivity = `${Number.parseInt(d.sentivity) * 100}%`);
+          //  x.map(d => d.sensitivity = `${Number.parseInt(d.sensitivity) * 100}%`);
           return x;
         }),
       )
       .subscribe(res => {
-        this.results.set(res);
+        this.results.update(() => res);
       });
   }
 
